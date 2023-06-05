@@ -1,0 +1,74 @@
+# Demogaphics
+
+This is a book created from markdown and executable code.
+
+See @knuth84 for additional discussion of literate programming.
+
+```{r message=FALSE, echo=FALSE, warning=FALSE}
+library(readxl)
+library(scorekeeper)
+library(tidyverse)
+
+dem_pre_scoresheet <-
+read_excel("Demographics/Demographics_preschedule.xlsx")
+dem_pre_data_unscored <-
+read.csv("Demographics/demographics_pre_data.csv")
+```
+
+
+```{r message=FALSE, echo=FALSE, warning=FALSE}
+dem_pre_data <-
+scorekeep(dem_pre_data_unscored, dem_pre_scoresheet)[[3]]
+dem_pre_data <- dem_pre_data[-c(26,52:55, 31, 32, 45, 48:55), ]
+
+dem_pre_data$dcf_date <-
+  as.Date(dem_pre_data$dcf_date)
+dem_pre_data$dcf_age <-
+  as.Date(dem_pre_data$dcf_age)
+dem_pre_data <- dem_pre_data %>%
+  mutate(age = floor((dcf_date - dcf_age) / 365.25))
+dem_pre_data <- dem_pre_data %>%
+  mutate(age = as.integer(as.POSIXlt(dcf_date)$year) - as.integer(as.POSIXlt(dcf_age)$year))
+
+mean_age <- mean(dem_pre_data$age, na.rm = TRUE)
+
+race_counts <- table(dem_pre_data$dcf_race)
+sexual_counts <- table(dem_pre_data$dcf_research_sexual)
+gender_counts <- table(dem_pre_data$dcf_research_gender)
+
+student_pre <- sum(dem_pre_data$dcf_student)
+
+##demographics postscheduled##
+
+raw_post_data <-
+  read_csv("Demographics/Demographics_post_data.csv")
+
+demographic_scoresheet <-
+  read_excel("Demographics/Demographics_postschedule.xlsx")
+
+dem_post_data <-
+  scorekeep(raw_post_data, demographic_scoresheet)[[5]]
+
+dem_post_data$dcf_date <-
+  as.Date(dem_post_data$dcf_date)
+dem_post_data$dcf_age <-
+  as.Date(dem_post_data$dcf_age)
+dem_post_data <- dem_post_data %>%
+  mutate(age = floor((dcf_date - dcf_age) / 365.25))
+dem_post_data <- dem_post_data %>%
+  mutate(age = as.integer(as.POSIXlt(dcf_date)$year) - as.integer(as.POSIXlt(dcf_age)$year))
+
+dem_post_data <- dem_post_data[-c(1), ]
+
+mean_age <- mean(dem_post_data$age, na.rm = TRUE)
+race_counts <- table(dem_post_data$dcf_race)
+sexual_counts <- table(dem_post_data$dcf_research_sexual)
+gender_counts <- table(dem_post_data$dcf_research_gender)
+```
+
+
+```{r message=FALSE, echo=FALSE, warning=FALSE}
+student_post <- sum(dem_post_data$dcf_student)
+```
+
+The mean age of the sample is `r mean_age`

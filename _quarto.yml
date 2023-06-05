@@ -1,0 +1,23 @@
+project:
+  type: book
+
+book:
+  title: "BAM Manuscript"
+  author: "Jane Doe"
+  date: "6/5/2023"
+  chapters:
+    - index.qmd
+    - demographics.qmd
+    - summary.qmd
+    - references.qmd
+
+bibliography: references.bib
+
+format:
+  html:
+    theme: cosmo
+  pdf:
+    documentclass: scrreprt
+
+editor: visual
+
