@@ -1,7 +1,6 @@
-# Sample Description
+
 
 The mean age of the sample is `r mean_age`
-
 ```{r message=FALSE, echo=FALSE, warning=FALSE}
 library(readxl)
 library(scorekeeper)
@@ -16,6 +15,7 @@ dem_pre_data <-
 scorekeep(dem_pre_data_unscored, dem_pre_scoresheet)[[3]]
 dem_pre_data <- dem_pre_data[-c(26, 31, 32, 45, 48:55), ]
 ```
+
 
 ```{r message=FALSE, echo=FALSE, warning=FALSE}
 dem_pre_data$dcf_date <-
@@ -35,6 +35,7 @@ gender_counts <- table(dem_pre_data$dcf_research_gender)
 
 student_pre <- sum(dem_pre_data$dcf_student)
 ```
+
 
 ```{r message=FALSE, echo=FALSE, warning=FALSE}
 ##demographics postscheduled##
@@ -61,3 +62,6 @@ dem_post_data <- dem_post_data[-c(1), ]
 
 fulljoin
 ```
+
+
+
