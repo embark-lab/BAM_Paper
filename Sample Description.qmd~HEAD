@@ -1,9 +1,4 @@
-<<<<<<< HEAD:Sample Description.qmd
-# Sample Description
-=======
-# Demogaphics
 
->>>>>>> a35d1942365e17d901ab1575a9166c3e4e8f518b:demographics.qmd
 
 The mean age of the sample is `r mean_age`
 ```{r message=FALSE, echo=FALSE, warning=FALSE}
