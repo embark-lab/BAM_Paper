@@ -11,12 +11,10 @@ library(readxl)
 library(scorekeeper)
 library(tidyverse)
 
-setwd("/Volumes/kschaumberg/BAM/EDJTP Pilot Paper/BAM_Paper/Demographics")
-
 dem_pre_scoresheet <-
-read_excel("/Volumes/kschaumberg/BAM/EDJTP Pilot Paper/BAM_Paper/Demographics/Demographics_preschedule.xlsx")
+read_excel("Demographics/Demographics_preschedule.xlsx")
 dem_pre_data_unscored <-
-read.csv("/Volumes/kschaumberg/BAM/EDJTP Pilot Paper/BAM_Paper/Demographics/demographics_pre_data.csv")
+read.csv("Demographics/demographics_pre_data.csv")
 
 dem_pre_data <-
 scorekeep(dem_pre_data_unscored, dem_pre_scoresheet)[[3]]
@@ -26,10 +24,10 @@ scorekeep(dem_pre_data_unscored, dem_pre_scoresheet)[[3]]
 ##demographics postscheduled##
 
 raw_post_data <-
-  read_csv("/Volumes/kschaumberg/BAM/EDJTP Pilot Paper/BAM_Paper/Demographics/Demographics_post_data.csv")
+  read_csv("Demographics/Demographics_post_data.csv")
 
 demographic_scoresheet <-
-  read_excel("/Volumes/kschaumberg/BAM/EDJTP Pilot Paper/BAM_Paper/Demographics/Demographics_postschedule.xlsx")
+  read_excel("Demographics/Demographics_postschedule.xlsx")
 
 dem_post_data <-
   scorekeep(raw_post_data, demographic_scoresheet)[[5]]
@@ -46,7 +44,7 @@ dem_data$age <- floor(as.numeric(difftime(dem_data$dcf_date, dem_data$dcf_age, u
 
 ```{r message=FALSE, echo=FALSE, warning=FALSE}
 age_excluded <- dem_data$age[-15]
-mean_age <- mean(age_excluded, na.rm = TRUE)
+mean_age <- round(mean(age_excluded, na.rm = TRUE), 2)
 excluded_data <- dem_data[-15, ]
 oldest_age <- max(excluded_data$age, na.rm = TRUE)
 youngest_age <- min(excluded_data$age, na.rm = TRUE)
@@ -70,4 +68,4 @@ sum_student <- sum(dem_data$dcf_student, na.rm = TRUE)
 ```
 
 
-66 participants were randomly assigned to either the BAM (N=38) or the Body Project (N=28) intervention. Of these, XX attended the interventions virtually (BAM: N=XX, BP: N=XX) beginning 09/20 and ending 02/22 due to the pandemic. Participants ranged in age from `r youngest_age` -- `r oldest_age` with the average age being `r mean_age`. Participants were mostly women (`r percent_women`). Participants were also mostly White (`r percent_white`) followed by Asian (`r percent_asian`) then Black (`r percent_black`). Furthermore, the majority of participants identified as heterosexual (`r percent_heterosexual`) (bisexual: `r percent_bisexual`; homosexual: `r percent_homosexual`). At the time of the intervention, `r sum_student` participants reported being students. 56 participants that attended sessions completed the initial post-session study activities and the the 8-week post-session activities.
+Participants (N = 66) were randomly assigned to either the BAM (N=38) or the Body Project (N=28) intervention. Of these, XX attended the interventions virtually (BAM: N=XX, BP: N=XX) beginning 09/20 and ending 02/22 due to the pandemic and XX attended in-person sessions (BAM: N=XX, BP: N=XX) from 03/22 to 04/23. Participants ranged in age from `r youngest_age` -- `r oldest_age` years with the average age being `r mean_age` years. Participants were mostly women (`r percent_women`%) and and the most commonly reported race was White (N = `r percent_white`%). Furthermore, the majority of participants identified as heterosexual (`r percent_heterosexual`%) followed by bisexual (`r percent_bisexual`%). At the time of the intervention, `r sum_student` participants reported being students. For a study flow diagram, see figure Y.
