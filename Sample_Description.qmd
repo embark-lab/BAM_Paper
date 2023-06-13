@@ -13,11 +13,11 @@ library(tidyverse)
 
 dem_pre_scoresheet <-
 read_excel("Demographics/Demographics_preschedule.xlsx")
-dem_pre_data_unscored <-
+raw_pre_data <-
 read.csv("Demographics/demographics_pre_data.csv")
 
 dem_pre_data <-
-scorekeep(dem_pre_data_unscored, dem_pre_scoresheet)[[3]]
+scorekeep(raw_pre_data, dem_pre_scoresheet)[[4]]
 ```
 
 ```{r message=FALSE, echo=FALSE, warning=FALSE}
@@ -26,11 +26,11 @@ scorekeep(dem_pre_data_unscored, dem_pre_scoresheet)[[3]]
 raw_post_data <-
   read_csv("Demographics/Demographics_post_data.csv")
 
-demographic_scoresheet <-
+dem_post_scoresheet <-
   read_excel("Demographics/Demographics_postschedule.xlsx")
 
 dem_post_data <-
-  scorekeep(raw_post_data, demographic_scoresheet)[[5]]
+  scorekeep(raw_post_data, dem_post_scoresheet)[[5]]
 
 ```
 
@@ -68,4 +68,4 @@ sum_student <- sum(dem_data$dcf_student, na.rm = TRUE)
 ```
 
 
-Participants (N = 66) were randomly assigned to either the BAM (N=38) or the Body Project (N=28) intervention. Of these, XX attended the interventions virtually (BAM: N=XX, BP: N=XX) beginning 09/20 and ending 02/22 due to the pandemic and XX attended in-person sessions (BAM: N=XX, BP: N=XX) from 03/22 to 04/23. Participants ranged in age from `r youngest_age` -- `r oldest_age` years with the average age being `r mean_age` years. Participants were mostly women (`r percent_women`%) and and the most commonly reported race was White (N = `r percent_white`%). Furthermore, the majority of participants identified as heterosexual (`r percent_heterosexual`%) followed by bisexual (`r percent_bisexual`%). At the time of the intervention, `r sum_student` participants reported being students. For a study flow diagram, see figure Y.
+Participants (N = 66) were randomly assigned to either the BAM (N=38) or the Body Project (N=28) intervention. Of these, 29 attended the interventions virtually (BAM: N=14, BP: N=15) beginning 10/20 and ending 02/22 due to the pandemic and 37 attended in-person sessions (BAM: N=24, BP: N=13) between 03/22 to 04/23. Participants ranged in age from `r youngest_age` -- `r oldest_age` years with the average age being `r mean_age` years. Participants were mostly women (`r percent_women`%) and and the most commonly reported race was White (N = `r percent_white`%). Furthermore, the majority of participants identified as heterosexual (`r percent_heterosexual`%) followed by bisexual (`r percent_bisexual`%). At the time of the intervention, `r sum_student` participants reported being students. For a study flow diagram, see figure Y.
