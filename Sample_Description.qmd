@@ -17,7 +17,7 @@ raw_pre_data <-
 read.csv("Demographics/demographics_pre_data.csv")
 
 dem_pre_data <-
-scorekeep(raw_pre_data, dem_pre_scoresheet)[[4]]
+scorekeep(raw_pre_data, dem_pre_scoresheet)[[4]] 
 ```
 
 ```{r message=FALSE, echo=FALSE, warning=FALSE}
@@ -36,10 +36,47 @@ dem_post_data <-
 
 ```{r message=FALSE, echo=FALSE, warning=FALSE}
 dem_data <- full_join(dem_pre_data, dem_post_data)
-dem_data <- dem_data[-31, ]
 dem_data$dcf_age <- as.Date(dem_data$dcf_age, format = "%m/%d/%y")
 dem_data$dcf_date <- as.Date(dem_data$dcf_date, format = "%m/%d/%y")
 dem_data$age <- floor(as.numeric(difftime(dem_data$dcf_date, dem_data$dcf_age, units = "days")) / 365.25)
+```
+
+```{r message=FALSE, echo=FALSE, warning=FALSE}
+bam_data <- subset(dem_data, dcf_group == 1)
+
+bam_white <- round((mean(bam_data$dcf_race == 1, na.rm = TRUE) * 100), 2)
+bam_black <- round((mean(bam_data$dcf_race == 2, na.rm = TRUE) * 100), 2)
+bam_asian <- round((mean(bam_data$dcf_race == 3, na.rm = TRUE) * 100), 2)
+bam_native <- round((mean(bam_data$dcf_race == 4, na.rm = TRUE) * 100), 2)
+bam_hispanic <- round((mean(bam_data$dcf_race == 5, na.rm = TRUE) * 100), 2)
+bam_pacific <- round((mean(bam_data$dcf_race == 6, na.rm = TRUE) * 100), 2)
+
+bam_women <- round((mean(bam_data$dcf_research_gender == 2, na.rm = TRUE) * 100), 2)
+
+bam_heterosexual <- round((mean(bam_data$dcf_research_sexual == 1, na.rm = TRUE) * 100), 2)
+bam_homosexual <- round((mean(bam_data$dcf_research_sexual == 2, na.rm = TRUE) * 100), 2)
+bam_bisexual <- round((mean(bam_data$dcf_research_sexual == 3, na.rm = TRUE) * 100), 2)
+
+
+bam_student <- round((mean(bam_data$dcf_student == 1, na.rm = TRUE) * 100), 2)
+```
+
+```{r message=FALSE, echo=FALSE, warning=FALSE}
+bp_data <- subset(dem_data, dcf_group == 0)
+bp_white <- round((mean(bp_data$dcf_race == 1, na.rm = TRUE) * 100), 2)
+bp_black <- round((mean(bp_data$dcf_race == 2, na.rm = TRUE) * 100), 2)
+bp_asian <- round((mean(bp_data$dcf_race == 3, na.rm = TRUE) * 100), 2)
+bp_native <- round((mean(bp_data$dcf_race == 4, na.rm = TRUE) * 100), 2)
+bp_hispanic <- round((mean(bp_data$dcf_race == 5, na.rm = TRUE) * 100), 2)
+bp_pacific <- round((mean(bp_data$dcf_race == 6, na.rm = TRUE) * 100), 2)
+
+bp_women <- round((mean(bp_data$dcf_research_gender == 2, na.rm = TRUE) * 100), 2)
+
+bp_heterosexual <- round((mean(bp_data$dcf_research_sexual == 1, na.rm = TRUE) * 100), 2)
+bp_homosexual <- round((mean(bp_data$dcf_research_sexual == 2, na.rm = TRUE) * 100), 2)
+bp_bisexual <- round((mean(bp_data$dcf_research_sexual == 3, na.rm = TRUE) * 100), 2)
+
+bp_student <- round((mean(bp_data$dcf_student == 1, na.rm = TRUE) * 100), 2)
 ```
 
 ```{r message=FALSE, echo=FALSE, warning=FALSE}
@@ -67,5 +104,10 @@ percent_student <- round((mean(dem_data$dcf_student == 1, na.rm = TRUE) * 100), 
 sum_student <- sum(dem_data$dcf_student, na.rm = TRUE)
 ```
 
-
 Participants (N = 66) were randomly assigned to either the BAM (N=38) or the Body Project (N=28) intervention. Of these, 29 attended the interventions virtually (BAM: N=14, BP: N=15) beginning 10/20 and ending 02/22 due to the pandemic and 37 attended in-person sessions (BAM: N=24, BP: N=13) between 03/22 to 04/23. Participants ranged in age from `r youngest_age` -- `r oldest_age` years with the average age being `r mean_age` years. Participants were mostly women (`r percent_women`%) and and the most commonly reported race was White (N = `r percent_white`%). Furthermore, the majority of participants identified as heterosexual (`r percent_heterosexual`%) followed by bisexual (`r percent_bisexual`%). At the time of the intervention, `r sum_student` participants reported being students. For a study flow diagram, see figure Y.
+
+| Col1          | Col2 | Col3 |
+|---------------|------|------|
+| `r bp_native` |      |      |
+|               |      |      |
+|               |      |      |
