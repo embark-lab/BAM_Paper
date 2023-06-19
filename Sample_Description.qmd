@@ -45,17 +45,33 @@ dem_data$age <- floor(as.numeric(difftime(dem_data$dcf_date, dem_data$dcf_age, u
 bam_data <- subset(dem_data, dcf_group == 1)
 
 bam_white <- round((mean(bam_data$dcf_race == 1, na.rm = TRUE) * 100), 2)
+bam_white_n <- sum(bam_data$dcf_race == 1, na.rm = TRUE)
 bam_black <- round((mean(bam_data$dcf_race == 2, na.rm = TRUE) * 100), 2)
+bam_black_n <- sum(bam_data$dcf_race == 2, na.rm = TRUE)
 bam_asian <- round((mean(bam_data$dcf_race == 3, na.rm = TRUE) * 100), 2)
+bam_asian_n <- sum(bam_data$dcf_race == 3, na.rm = TRUE)
 bam_native <- round((mean(bam_data$dcf_race == 4, na.rm = TRUE) * 100), 2)
+bam_native_n <- sum(bam_data$dcf_race == 4, na.rm = TRUE)
 bam_hispanic <- round((mean(bam_data$dcf_race == 5, na.rm = TRUE) * 100), 2)
+bam_hispanic_n <- sum(bam_data$dcf_race == 5, na.rm = TRUE)
 bam_pacific <- round((mean(bam_data$dcf_race == 6, na.rm = TRUE) * 100), 2)
+bam_pacific_n <- sum(bam_data$dcf_race == 6, na.rm = TRUE)
 
 bam_women <- round((mean(bam_data$dcf_research_gender == 2, na.rm = TRUE) * 100), 2)
+bam_women_n <- sum(bam_data$dcf_research_gender == 2, na.rm = TRUE)
+bam_men <- round((mean(bam_data$dcf_research_gender == 1, na.rm = TRUE) * 100), 2)
+bam_men_n <- sum(bam_data$dcf_research_gender == 1, na.rm = TRUE)
+bam_nonbinary <- round((mean(bam_data$dcf_research_gender == 3, na.rm = TRUE) * 100), 2)
+bam_nonbinary_n <- sum(bam_data$dcf_research_gender == 3, na.rm = TRUE)
 
 bam_heterosexual <- round((mean(bam_data$dcf_research_sexual == 1, na.rm = TRUE) * 100), 2)
+bam_hetero_n <- sum(bam_data$dcf_research_sexual == 1, na.rm = TRUE)
 bam_homosexual <- round((mean(bam_data$dcf_research_sexual == 2, na.rm = TRUE) * 100), 2)
+bam_homo_n <- sum(bam_data$dcf_research_sexual == 2, na.rm = TRUE)
 bam_bisexual <- round((mean(bam_data$dcf_research_sexual == 3, na.rm = TRUE) * 100), 2)
+bam_bi_n <- sum(bam_data$dcf_research_sexual == 3, na.rm = TRUE)
+bam_asexual <- round((mean(bam_data$dcf_research_sexual == 5, na.rm = TRUE) * 100), 2)
+bam_asex_n <- sum(bam_data$dcf_research_sexual == 5, na.rm = TRUE)
 
 
 bam_student <- round((mean(bam_data$dcf_student == 1, na.rm = TRUE) * 100), 2)
@@ -64,19 +80,54 @@ bam_student <- round((mean(bam_data$dcf_student == 1, na.rm = TRUE) * 100), 2)
 ```{r message=FALSE, echo=FALSE, warning=FALSE}
 bp_data <- subset(dem_data, dcf_group == 0)
 bp_white <- round((mean(bp_data$dcf_race == 1, na.rm = TRUE) * 100), 2)
+bp_white_n <- sum(bp_data$dcf_race == 1, na.rm = TRUE)
 bp_black <- round((mean(bp_data$dcf_race == 2, na.rm = TRUE) * 100), 2)
+bp_black_n <- sum(bp_data$dcf_race == 2, na.rm = TRUE)
 bp_asian <- round((mean(bp_data$dcf_race == 3, na.rm = TRUE) * 100), 2)
+bp_asian_n <- sum(bp_data$dcf_race == 3, na.rm = TRUE)
 bp_native <- round((mean(bp_data$dcf_race == 4, na.rm = TRUE) * 100), 2)
+bp_native_n <- sum(bp_data$dcf_race == 4, na.rm = TRUE)
 bp_hispanic <- round((mean(bp_data$dcf_race == 5, na.rm = TRUE) * 100), 2)
+bp_hispanic_n <- sum(bp_data$dcf_race == 5, na.rm = TRUE)
 bp_pacific <- round((mean(bp_data$dcf_race == 6, na.rm = TRUE) * 100), 2)
+bp_pacific_n <- sum(bp_data$dcf_race == 6, na.rm = TRUE)
 
 bp_women <- round((mean(bp_data$dcf_research_gender == 2, na.rm = TRUE) * 100), 2)
+bp_women_n <- sum(bp_data$dcf_research_gender == 2, na.rm = TRUE)
+bp_men <- round((mean(bp_data$dcf_research_gender == 1, na.rm = TRUE) * 100), 2)
+bp_men_n <- sum(bp_data$dcf_research_gender == 1, na.rm = TRUE)
+bp_nonbinary <- round((mean(bp_data$dcf_research_gender == 3, na.rm = TRUE) * 100), 2)
+bp_nonbinary_n <- sum(bp_data$dcf_research_gender == 3, na.rm = TRUE)
 
 bp_heterosexual <- round((mean(bp_data$dcf_research_sexual == 1, na.rm = TRUE) * 100), 2)
+bp_hetero_n <- sum(bp_data$dcf_research_sexual == 1, na.rm = TRUE)
 bp_homosexual <- round((mean(bp_data$dcf_research_sexual == 2, na.rm = TRUE) * 100), 2)
+bp_homo_n <- sum(bp_data$dcf_research_sexual == 2, na.rm = TRUE)
 bp_bisexual <- round((mean(bp_data$dcf_research_sexual == 3, na.rm = TRUE) * 100), 2)
+bp_bi_n <- sum(bp_data$dcf_research_sexual == 3, na.rm = TRUE)
+bp_asexual <- round((mean(bp_data$dcf_research_sexual == 5, na.rm = TRUE) * 100), 2)
+bp_asex_n <- sum(bp_data$dcf_research_sexual == 5, na.rm = TRUE)
 
 bp_student <- round((mean(bp_data$dcf_student == 1, na.rm = TRUE) * 100), 2)
+```
+
+```{r message=FALSE, echo=FALSE, warning=FALSE}
+total_women_n <- bam_women_n + bp_women_n
+total_women <- bam_women + bp_women
+total_men_n <- bam_men_n + bp_men_n
+total_nonbinary_n <- bam_nonbinary_n + bp_nonbinary_n
+
+total_white_n <- bam_white_n + bp_white_n
+total_black_n <- bam_black_n + bp_black_n
+total_asian_n <- bam_asian_n + bp_asian_n
+total_native_n <- bam_native_n + bp_native_n
+total_hispanic_n <- bam_hispanic_n + bp_hispanic_n
+total_pacific_n <- bam_pacific_n + bp_pacific_n
+
+total_hetero_n <- bam_hetero_n + bp_hetero_n
+total_homo_n <- bam_homo_n + bp_homo_n
+total_bi_n <- bam_bi_n + bp_bi_n
+total_asex_n <- bam_asex_n + bp_asex_n
 ```
 
 ```{r message=FALSE, echo=FALSE, warning=FALSE}
@@ -104,10 +155,28 @@ percent_student <- round((mean(dem_data$dcf_student == 1, na.rm = TRUE) * 100), 
 sum_student <- sum(dem_data$dcf_student, na.rm = TRUE)
 ```
 
-Participants (N = 66) were randomly assigned to either the BAM (N=38) or the Body Project (N=28) intervention. Of these, 29 attended the interventions virtually (BAM: N=14, BP: N=15) beginning 10/20 and ending 02/22 due to the pandemic and 37 attended in-person sessions (BAM: N=24, BP: N=13) between 03/22 to 04/23. Participants ranged in age from `r youngest_age` -- `r oldest_age` years with the average age being `r mean_age` years. Participants were mostly women (`r percent_women`%) and and the most commonly reported race was White (N = `r percent_white`%). Furthermore, the majority of participants identified as heterosexual (`r percent_heterosexual`%) followed by bisexual (`r percent_bisexual`%). At the time of the intervention, `r sum_student` participants reported being students. For a study flow diagram, see figure Y.
+Participants (N = 66) were randomly assigned to either the BAM (N=38) or the Body Project (N=28) intervention. Of these, 29 attended the interventions virtually (BAM: N=14, BP: N=15) beginning 10/20 and ending 02/22 due to the pandemic and 37 attended in-person sessions (BAM: N=24, BP: N=13) between 03/22 to 04/23. Participants ranged in age from `r youngest_age` -- `r oldest_age` years with the average age being `r mean_age` years. Participants were mostly women (`r percent_women`%) and and the most commonly reported race was White (N = `r percent_white`%). Furthermore, the majority of participants identified as heterosexual (`r percent_heterosexual`%) followed by bisexual (`r percent_bisexual`%). At the time of the intervention, `r sum_student` participants reported being students. For a study flow diagram, see Figure 1.
 
-| Col1          | Col2 | Col3 |
-|---------------|------|------|
-| `r bp_native` |      |      |
-|               |      |      |
-|               |      |      |
+| Demographics     | BAM                                      | Body Project                           | Total                         |
+|------------------|------------------|------------------|------------------|
+| n                | 38 (58%)                                 | 28 (42%)                               | 66 (100%)                     |
+| *Gender*         |                                          |                                        |                               |
+| Female           | `r bam_women_n` (`r bam_women`%)         | `r bp_women_n` (`r bp_women`%)         | `r total_women_n` (95.45%)    |
+| Male             | `r bam_men_n` (`r bam_men`%)             | `r bp_men_n` (`r bp_men`%)             | `r total_men_n` (3.03%)       |
+| Nonbinary        | `r bam_nonbinary_n` (`r bam_nonbinary`%) | `r bp_nonbinary_n` (`r bp_nonbinary`%) | `r total_nonbinary_n` (1.52%) |
+| *Race*           |                                          |                                        |                               |
+| White            | `r bam_white_n` (`r bam_white`%)         | `r bp_white_n` (`r bp_white`%)         | `r total_white_n` (75.76%)    |
+| Black            | `r bam_black_n` (`r bam_black`%)         | `r bp_black_n` (`r bp_black`%)         | `r total_black_n` (3.03%)     |
+| Asian            | `r bam_asian_n` (`r bam_asian`%)         | `r bp_asian_n` (`r bp_asian`%)         | `r total_asian_n` (18.18%)    |
+| Native American  | `r bam_native_n` (`r bam_native`%)       | `r bp_native_n` (`r bp_native`%)       | `r total_native_n` (1.52%)    |
+| Hispanic/Latino  | `r bam_hispanic_n` (`r bam_hispanic`%)   | `r bp_hispanic_n` (`r bp_hispanic`%)   | `r total_hispanic_n` (0%)     |
+| Pacific Islander | `r bam_pacific_n` (`r bam_pacific`%)     | `r bp_pacific_n` (`r bp_pacific`%)     | `r total_pacific_n` (1.52%)   |
+| *Sexuality*      |                                          |                                        |                               |
+| Heterosexual     | `r bam_hetero_n` (`r bam_heterosexual`%) | `r bp_hetero_n` (`r bp_heterosexual`%) | `r total_hetero_n` (69.70%)   |
+| Homosexual       | `r bam_homo_n` (`r bam_homosexual`%)     | `r bp_homo_n` (`r bp_homosexual`%)     | `r total_homo_n` (1.52%)      |
+| Bisexual         | `r bam_bi_n` (`r bam_bisexual`%)         | `r bp_bi_n` (`r bp_bisexual`%)         | `r total_bi_n` (27.27%)       |
+| Asexual          | `r bam_asex_n` (`r bam_asexual`%)        | `r bp_asex_n` (`r bp_asexual`%)        | `r total_asex_n` (1.52%)      |
+
+Table 1: Demographics of participants at baseline.
+
+![Figure 1: Study Flow Diagram](BAM_Study_Flow.png)
