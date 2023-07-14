@@ -1,0 +1,62 @@
+---
+title: "Results"
+editor: visual
+---
+
+# Results
+
+```{r message=FALSE, echo=FALSE, warning=FALSE}
+###Selecting only pps that have completed all 3 timepoints###
+
+completed_participants <- with(BAM_redcap_long_merged, id[ave(timepoint, id, FUN = function(x) length(unique(x))) == 3])
+
+### Split data into BAM and Body Project ###
+BAM_dataset <- subset(BAM_redcap_long_merged, id %in% completed_participants & group == 'FP')
+Body_Project_dataset <- subset(BAM_redcap_long_merged, id %in% completed_participants & group == 'BP')
+
+###split up the groups by timepoints###
+bam_baseline <- subset(BAM_dataset, timepoint == 'baseline')
+bam_post <- subset(BAM_dataset, timepoint == 'post')
+bam_8week <- subset(BAM_dataset, timepoint == '8wk')
+
+bp_baseline <- subset(Body_Project_dataset, timepoint == 'baseline')
+bp_post <- subset(Body_Project_dataset, timepoint == 'post')
+bp_8wk <- subset(Body_Project_dataset, timepoint == '8wk')
+```
+
+## Fatphobia
+
+## Anti-fat Bias
+
+```{r message=FALSE, echo=FALSE, warning=FALSE}
+###BAM UMB-FAT analysis###
+mean_fp_umbfat_base <- mean(bam_baseline$umb_total_sum)
+mean_fp_umbfat_post <- mean(bam_post$umb_total_sum)
+mean_fp_umbfat_wk8 <- mean(bam_8week$umb_total_sum)
+
+sd_fp_umbfat_base <- sd(bam_baseline$umb_total_sum)
+sd_fp_umbfat_post <- sd(bam_post$umb_total_sum)
+sd_fp_umbfat_wk8 <- sd(bam_8week$umb_total_sum)
+
+cd_fp_umbfat_base_post <- (mean_fp_umbfat_post - mean_fp_umbfat_base) / sqrt((sd_fp_umbfat_base^2 + sd_fp_umbfat_post^2) / 2)
+cd_fp_umbfat_base_wk8 <- (mean_fp_umbfat_wk8 - mean_fp_umbfat_base) / sqrt((sd_fp_umbfat_base^2 + sd_fp_umbfat_wk8^2) / 2)
+cd_fp_umbfat_post_wk8 <- (mean_fp_umbfat_wk8 - mean_fp_umbfat_post) / sqrt((sd_fp_umbfat_post^2 + sd_fp_umbfat_wk8^2) / 2)
+```
+
+```{r message=FALSE, echo=FALSE, warning=FALSE}
+###BP UMB-FAT analysis###
+mean_bp_umbfat_base <- mean(bp_baseline$umb_total_sum)
+mean_bp_umbfat_post <- mean(bp_post$umb_total_sum)
+mean_bp_umbfat_wk8 <- mean(bp_8wk$umb_total_sum)
+
+sd_bp_umbfat_base <- sd(bp_baseline$umb_total_sum)
+sd_bp_umbfat_post <- sd(bp_post$umb_total_sum)
+sd_bp_umbfat_wk8 <- sd(bp_8wk$umb_total_sum)
+
+cd_bp_umbfat_base_post <- (mean_bp_umbfat_post - mean_bp_umbfat_base) / sqrt((sd_bp_umbfat_base^2 + sd_bp_umbfat_post^2) / 2)
+cd_bp_umbfat_base_wk8 <- (mean_bp_umbfat_wk8 - mean_bp_umbfat_base) / sqrt((sd_bp_umbfat_base^2 + sd_bp_umbfat_wk8^2) / 2)
+cd_bp_umbfat_post_wk8 <- (mean_bp_umbfat_wk8 - mean_bp_umbfat_post) / sqrt((sd_bp_umbfat_post^2 + sd_bp_umbfat_wk8^2) / 2)
+
+```
+
+Anti-fat Bias was assessed at all three time points for both BAM participants (N = 26) and Body Project participants (N = 24) using the Universal Measure of Bias-FAT (UMB-FAT)[@dursoUnderstandingSelfdirectedStigma2008] and the Eating Pathology Symptoms Inventory (EPSI) negative attitudes toward obesity subcale [@coniglioFactorialIntegrityValidation2018].
