@@ -41,9 +41,7 @@ sd_fp_umbfat_wk8 <- sd(bam_8week$umb_total_sum)
 cd_fp_umbfat_base_post <- (mean_fp_umbfat_post - mean_fp_umbfat_base) / sqrt((sd_fp_umbfat_base^2 + sd_fp_umbfat_post^2) / 2)
 cd_fp_umbfat_base_wk8 <- (mean_fp_umbfat_wk8 - mean_fp_umbfat_base) / sqrt((sd_fp_umbfat_base^2 + sd_fp_umbfat_wk8^2) / 2)
 cd_fp_umbfat_post_wk8 <- (mean_fp_umbfat_wk8 - mean_fp_umbfat_post) / sqrt((sd_fp_umbfat_post^2 + sd_fp_umbfat_wk8^2) / 2)
-```
 
-```{r message=FALSE, echo=FALSE, warning=FALSE}
 ###BP UMB-FAT analysis###
 mean_bp_umbfat_base <- mean(bp_baseline$umb_total_sum)
 mean_bp_umbfat_post <- mean(bp_post$umb_total_sum)
@@ -56,6 +54,18 @@ sd_bp_umbfat_wk8 <- sd(bp_8wk$umb_total_sum)
 cd_bp_umbfat_base_post <- (mean_bp_umbfat_post - mean_bp_umbfat_base) / sqrt((sd_bp_umbfat_base^2 + sd_bp_umbfat_post^2) / 2)
 cd_bp_umbfat_base_wk8 <- (mean_bp_umbfat_wk8 - mean_bp_umbfat_base) / sqrt((sd_bp_umbfat_base^2 + sd_bp_umbfat_wk8^2) / 2)
 cd_bp_umbfat_post_wk8 <- (mean_bp_umbfat_wk8 - mean_bp_umbfat_post) / sqrt((sd_bp_umbfat_post^2 + sd_bp_umbfat_wk8^2) / 2)
+```
+
+```{r message=FALSE, echo=FALSE, warning=FALSE}
+###BAM EPSI subscale analysis###
+
+mean_fp_epsi_base <- mean(bam_baseline$epsi_neg_obese_25)
+mean_fp_epsi_post <- mean(bam_post$epsi_neg_obese_25)
+mean_fp_epsi_wk8 <- mean(bam_8week$epsi_neg_obese_25)
+
+sd_fp_epsi_base <- sd(bam_baseline$epsi_neg_obese_25)
+sd_fp_epsi_post <- sd(bam_post$epsi_neg_obese_25)
+sd_fp_epsi_wk8 <- sd(bam_8week$epsi_neg_obese_25)
 
 ```
 
