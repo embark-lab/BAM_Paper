@@ -58,15 +58,114 @@ cd_bp_umbfat_post_wk8 <- (mean_bp_umbfat_wk8 - mean_bp_umbfat_post) / sqrt((sd_b
 
 ```{r message=FALSE, echo=FALSE, warning=FALSE}
 ###BAM EPSI subscale analysis###
-
-mean_fp_epsi_base <- mean(bam_baseline$epsi_neg_obese_25)
-mean_fp_epsi_post <- mean(bam_post$epsi_neg_obese_25)
-mean_fp_epsi_wk8 <- mean(bam_8week$epsi_neg_obese_25)
-
-sd_fp_epsi_base <- sd(bam_baseline$epsi_neg_obese_25)
-sd_fp_epsi_post <- sd(bam_post$epsi_neg_obese_25)
-sd_fp_epsi_wk8 <- sd(bam_8week$epsi_neg_obese_25)
-
 ```
 
 Anti-fat Bias was assessed at all three time points for both BAM participants (N = 26) and Body Project participants (N = 24) using the Universal Measure of Bias-FAT (UMB-FAT)[@dursoUnderstandingSelfdirectedStigma2008] and the Eating Pathology Symptoms Inventory (EPSI) negative attitudes toward obesity subcale [@coniglioFactorialIntegrityValidation2018].
+
+Within the BAM group, the effect sizes for UMB-FAT were as follows:
+
+-   The effect size between baseline and post-session was `r cd_fp_umbfat_base_post`, indicating \[interpretation of effect size\].
+
+-   The effect size between baseline and 8 weeks was `r cd_fp_umbfat_base_wk8`, indicating \[interpretation of effect size\].
+
+-   The effect size between post-session and 8 weeks was `r cd_fp_umbfat_post_wk8`, indicating \[interpretation of effect size\].
+
+Within the Body Project group, the effect sizes for UMB-FAT were as follows:
+
+-   The effect size between baseline and post-session was `r cd_bp_umbfat_base_post`, indicating \[interpretation of effect size\].
+
+-   The effect size between baseline and 8 weeks was `r cd_bp_umbfat_base_wk8`, indicating \[interpretation of effect size\].
+
+-   The effect size between post-session and 8 weeks was `r cd_bp_umbfat_post_wk8`, indicating \[interpretation of effect size\].
+
+## Thin Ideal Internalization
+
+```{r message=FALSE, echo=FALSE, warning=FALSE}
+###BAM SATAQ Analysis###
+mean_fp_sataq_base <- mean(bam_baseline$sataq_average)
+mean_fp_sataq_post <- mean(bam_post$sataq_average)
+mean_fp_sataq_wk8 <- mean(bam_8week$sataq_average)
+
+sd_fp_sataq_base <- sd(bam_baseline$sataq_average)
+sd_fp_sataq_post <- sd(bam_post$sataq_average)
+sd_fp_sataq_wk8 <- sd(bam_8week$sataq_average)
+
+cd_fp_sataq_base_post <- (mean_fp_sataq_post - mean_fp_sataq_base) / sqrt((sd_fp_sataq_base^2 + sd_fp_sataq_post^2) / 2)
+cd_fp_sataq_base_wk8 <- (mean_fp_sataq_wk8 - mean_fp_sataq_base) / sqrt((sd_fp_sataq_base^2 + sd_fp_sataq_wk8^2) / 2)
+cd_fp_sataq_post_wk8 <- (mean_fp_sataq_wk8 - mean_fp_sataq_post) / sqrt((sd_fp_sataq_post^2 + sd_fp_sataq_wk8^2) / 2)
+
+###BP SATAQ Analysis###
+mean_bp_sataq_base <- mean(bp_baseline$sataq_average)
+mean_bp_sataq_post <- mean(bp_post$sataq_average)
+mean_bp_sataq_wk8 <- mean(bp_8wk$sataq_average, na.rm = TRUE)
+
+sd_bp_sataq_base <- sd(bp_baseline$sataq_average)
+sd_bp_sataq_post <- sd(bp_post$sataq_average)
+sd_bp_sataq_wk8 <- sd(bp_8wk$sataq_average, na.rm = TRUE)
+
+cd_bp_sataq_base_post <- (mean_bp_sataq_post - mean_bp_sataq_base) / sqrt((sd_bp_sataq_base^2 + sd_bp_sataq_post^2) / 2)
+cd_bp_sataq_base_wk8 <- (mean_bp_sataq_wk8 - mean_bp_sataq_base) / sqrt((sd_bp_sataq_base^2 + sd_bp_sataq_wk8^2) / 2)
+cd_bp_sataq_post_wk8 <- (mean_bp_sataq_wk8 - mean_bp_sataq_post) / sqrt((sd_bp_sataq_post^2 + sd_bp_sataq_wk8^2) / 2)
+```
+
+```{r message=FALSE, echo=FALSE, warning=FALSE}
+###BAM IBSS-R Analysis###
+mean_fp_ibssr_base <- mean(bam_baseline$ibssr_mean_25, na.rm = TRUE)
+mean_fp_ibssr_post <- mean(bam_post$ibssr_mean_25, na.rm = TRUE)
+mean_fp_ibssr_wk8 <- mean(bam_8week$ibssr_mean_25, na.rm = TRUE)
+
+sd_fp_ibssr_base <- sd(bam_baseline$ibssr_mean_25, na.rm = TRUE)
+sd_fp_ibssr_post <- sd(bam_post$ibssr_mean_25, na.rm = TRUE)
+sd_fp_ibssr_wk8 <- sd(bam_8week$ibssr_mean_25, na.rm = TRUE)
+
+cd_fp_ibssr_base_post <- (mean_fp_ibssr_post - mean_fp_ibssr_base) / sqrt((sd_fp_ibssr_base^2 + sd_fp_ibssr_post^2) / 2)
+cd_fp_ibssr_base_wk8 <- (mean_fp_ibssr_wk8 - mean_fp_ibssr_base) / sqrt((sd_fp_ibssr_base^2 + sd_fp_ibssr_wk8^2) / 2)
+cd_fp_ibssr_post_wk8 <- (mean_fp_ibssr_wk8 - mean_fp_ibssr_post) / sqrt((sd_fp_ibssr_post^2 + sd_fp_ibssr_wk8^2) / 2)
+
+###BP IBSSR Analysis###
+mean_bp_ibssr_base <- mean(bp_baseline$ibssr_mean_25, na.rm = TRUE)
+mean_bp_ibssr_post <- mean(bp_post$ibssr_mean_25, na.rm = TRUE)
+mean_bp_ibssr_wk8 <- mean(bp_8wk$ibssr_mean_25, na.rm = TRUE)
+
+sd_bp_ibssr_base <- sd(bp_baseline$ibssr_mean_25, na.rm = TRUE)
+sd_bp_ibssr_post <- sd(bp_post$ibssr_mean_25, na.rm = TRUE)
+sd_bp_ibssr_wk8 <- sd(bp_8wk$ibssr_mean_25, na.rm = TRUE)
+
+cd_bp_ibssr_base_post <- (mean_bp_ibssr_post - mean_bp_ibssr_base) / sqrt((sd_bp_ibssr_base^2 + sd_bp_ibssr_post^2) / 2)
+cd_bp_ibssr_base_wk8 <- (mean_bp_ibssr_wk8 - mean_bp_ibssr_base) / sqrt((sd_bp_ibssr_base^2 + sd_bp_ibssr_wk8^2) / 2)
+cd_bp_ibssr_post_wk8 <- (mean_bp_ibssr_wk8 - mean_bp_ibssr_post) / sqrt((sd_bp_ibssr_post^2 + sd_bp_ibssr_wk8^2) / 2)
+```
+
+Furthermore, thin ideal internalization was assessed using the Sociocultural Attitudes Towards Appearance Questionnaire (SATAQ) [@schaeferDevelopmentValidationSociocultural2015] and the Ideal Body Stereotype Scale - Revised (IBSS-R) [@sticeTestDualPathway1996].
+
+Within the BAM group, the effect sizes for SATAQ were as follows:
+
+-   The effect size between baseline and post-session was `r cd_fp_sataq_base_post`, indicating \[interpretation of effect size\].
+
+-   The effect size between baseline and 8 weeks was `r cd_fp_sataq_base_wk8`, indicating \[interpretation of effect size\].
+
+-   The effect size between post-session and 8 weeks was `r cd_fp_sataq_post_wk8`, indicating \[interpretation of effect size\].
+
+Within the Body Project group, the effect sizes for SATAQ were as follows:
+
+-   The effect size between baseline and post-session was `r cd_bp_sataq_base_post`, indicating \[interpretation of effect size\].
+
+-   The effect size between baseline and 8 weeks was `r cd_bp_sataq_base_wk8`, indicating \[interpretation of effect size\].
+
+-   The effect size between post-session and 8 weeks was `r cd_bp_sataq_post_wk8`, indicating \[interpretation of effect size\].
+
+Furthermore, the effect sizes for the IBSS-R for the BAM group were:
+
+-   The effect size between baseline and post-session was `r cd_fp_ibssr_base_post`, indicating \[interpretation of effect size\].
+
+-   The effect size between baseline and 8 weeks was `r cd_fp_ibssr_base_wk8`, indicating \[interpretation of effect size\].
+
+-   The effect size between post-session and 8 weeks was `r cd_fp_ibssr_post_wk8`, indicating \[interpretation of effect size\].
+
+Within the Body Project group, the effect sizes for IBSS-R were as follows:
+
+-   The effect size between baseline and post-session was `r cd_bp_ibssr_base_post`, indicating \[interpretation of effect size\].
+
+-   The effect size between baseline and 8 weeks was `r cd_bp_ibssr_base_wk8`, indicating \[interpretation of effect size\].
+
+-   The effect size between post-session and 8 weeks was `r cd_bp_ibssr_post_wk8`, indicating \[interpretation of effect size\].
