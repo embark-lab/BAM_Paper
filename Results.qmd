@@ -6,6 +6,16 @@ editor: visual
 # Results
 
 ```{r message=FALSE, echo=FALSE, warning=FALSE}
+### N for participants at each timepoint###
+fp_base_dataset <- subset(BAM_redcap_long_merged, group == 'FP' & timepoint == 'baseline')
+bp_base_dataset <- subset(BAM_redcap_long_merged, group == 'BP' & timepoint == 'baseline')
+
+fp_post_dataset <- subset(BAM_redcap_long_merged, group == 'FP' & timepoint == 'post')
+bp_post_dataset <- subset(BAM_redcap_long_merged, group == 'BP' & timepoint == 'post')
+
+fp_8wk_dataset <- subset(BAM_redcap_long_merged, group == 'FP' & timepoint == '8wk')
+bp_8wk_dataset <- subset(BAM_redcap_long_merged, group == 'BP' & timepoint == '8wk')
+
 ###Selecting only pps that have completed all 3 timepoints###
 
 completed_participants <- with(BAM_redcap_long_merged, id[ave(timepoint, id, FUN = function(x) length(unique(x))) == 3])
@@ -25,6 +35,52 @@ bp_8wk <- subset(Body_Project_dataset, timepoint == '8wk')
 ```
 
 ## Fatphobia
+
+```{r message=FALSE, echo=FALSE, warning=FALSE}
+###BAM GFFS analysis###
+mean_fp_gffs_base <- mean(bam_baseline$gffs_sum_25,na.rm = TRUE)
+mean_fp_gffs_post <- mean(bam_post$gffs_sum_25,na.rm = TRUE)
+mean_fp_gffs_wk8 <- mean(bam_8week$gffs_sum_25,na.rm = TRUE)
+
+sd_fp_gffs_base <- sd(bam_baseline$gffs_sum_25,na.rm = TRUE)
+sd_fp_gffs_post <- sd(bam_post$gffs_sum_25,na.rm = TRUE)
+sd_fp_gffs_wk8 <- sd(bam_8week$gffs_sum_25,na.rm = TRUE)
+
+cd_fp_gffs_base_post <- (mean_fp_gffs_post - mean_fp_gffs_base) / sqrt((sd_fp_gffs_base^2 + sd_fp_gffs_post^2) / 2)
+cd_fp_gffs_base_wk8 <- (mean_fp_gffs_wk8 - mean_fp_gffs_base) / sqrt((sd_fp_gffs_base^2 + sd_fp_gffs_wk8^2) / 2)
+cd_fp_gffs_post_wk8 <- (mean_fp_gffs_wk8 - mean_fp_gffs_post) / sqrt((sd_fp_gffs_post^2 + sd_fp_gffs_wk8^2) / 2)
+
+###BP GFFS Analysis###
+mean_bp_gffs_base <- mean(bp_baseline$gffs_sum_25,na.rm = TRUE)
+mean_bp_gffs_post <- mean(bp_post$gffs_sum_25,na.rm = TRUE)
+mean_bp_gffs_wk8 <- mean(bp_8wk$gffs_sum_25,na.rm = TRUE)
+
+sd_bp_gffs_base <- sd(bp_baseline$gffs_sum_25,na.rm = TRUE)
+sd_bp_gffs_post <- sd(bp_post$gffs_sum_25,na.rm = TRUE)
+sd_bp_gffs_wk8 <- sd(bp_8wk$gffs_sum_25,na.rm = TRUE)
+
+cd_bp_gffs_base_post <- (mean_bp_gffs_post - mean_bp_gffs_base) / sqrt((sd_bp_gffs_base^2 + sd_bp_gffs_post^2) / 2)
+cd_bp_gffs_base_wk8 <- (mean_bp_gffs_wk8 - mean_bp_gffs_base) / sqrt((sd_bp_gffs_base^2 + sd_bp_gffs_wk8^2) / 2)
+cd_bp_gffs_post_wk8 <- (mean_bp_gffs_wk8 - mean_bp_gffs_post) / sqrt((sd_bp_gffs_post^2 + sd_bp_gffs_wk8^2) / 2)
+```
+
+Fatphobia was assessed at the three time points for both BAM (N = 26) and Body Project (N = 24) participants using the Goldfarb Fear of Fat Scale [@goldfarbGoldfarbFearFat1985].
+
+Within the BAM group, the effect sizes for GFFS were as follows:
+
+-   The effect size between baseline and post-session was `r cd_fp_gffs_base_post`, indicating \[interpretation of effect size\].
+
+-   The effect size between baseline and 8 weeks was `r cd_fp_gffs_base_wk8`, indicating \[interpretation of effect size\].
+
+-   The effect size between post-session and 8 weeks was `r cd_fp_gffs_post_wk8`, indicating \[interpretation of effect size\].
+
+Within the Body Project group, the effect sizes for GFFS were as follows:
+
+-   The effect size between baseline and post-session was `r cd_bp_gffs_base_post`, indicating \[interpretation of effect size\].
+
+-   The effect size between baseline and 8 weeks was `r cd_bp_gffs_base_wk8`, indicating \[interpretation of effect size\].
+
+-   The effect size between post-session and 8 weeks was `r cd_bp_gffs_post_wk8`, indicating \[interpretation of effect size\].
 
 ## Anti-fat Bias
 
@@ -60,7 +116,7 @@ cd_bp_umbfat_post_wk8 <- (mean_bp_umbfat_wk8 - mean_bp_umbfat_post) / sqrt((sd_b
 ###BAM EPSI subscale analysis###
 ```
 
-Anti-fat Bias was assessed at all three time points for both BAM participants (N = 26) and Body Project participants (N = 24) using the Universal Measure of Bias-FAT (UMB-FAT)[@dursoUnderstandingSelfdirectedStigma2008] and the Eating Pathology Symptoms Inventory (EPSI) negative attitudes toward obesity subcale [@coniglioFactorialIntegrityValidation2018].
+Anti-fat Bias was also assessed at all three time points using the Universal Measure of Bias-FAT (UMB-FAT)[@dursoUnderstandingSelfdirectedStigma2008] and the Eating Pathology Symptoms Inventory (EPSI) negative attitudes toward obesity subcale [@coniglioFactorialIntegrityValidation2018].
 
 Within the BAM group, the effect sizes for UMB-FAT were as follows:
 
