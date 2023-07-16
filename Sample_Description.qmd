@@ -159,7 +159,7 @@ Participants (N = 69) were randomly assigned to either the BAM (N=40) or the Bod
 
 | Demographics     | BAM                                      | Body Project                           | Total                         |
 |------------------|------------------|------------------|------------------|
-| n                | 40 (58%)                                 | 29 (42%)                               | 69 (100%)                     |
+| n                | 38 (58%)                                 | 28 (42%)                               | 66 (100%)\*                   |
 | *Gender*         |                                          |                                        |                               |
 | Female           | `r bam_women_n` (`r bam_women`%)         | `r bp_women_n` (`r bp_women`%)         | `r total_women_n` (95.45%)    |
 | Male             | `r bam_men_n` (`r bam_men`%)             | `r bp_men_n` (`r bp_men`%)             | `r total_men_n` (3.03%)       |
@@ -176,6 +176,8 @@ Participants (N = 69) were randomly assigned to either the BAM (N=40) or the Bod
 | Homosexual       | `r bam_homo_n` (`r bam_homosexual`%)     | `r bp_homo_n` (`r bp_homosexual`%)     | `r total_homo_n` (1.52%)      |
 | Bisexual         | `r bam_bi_n` (`r bam_bisexual`%)         | `r bp_bi_n` (`r bp_bisexual`%)         | `r total_bi_n` (27.27%)       |
 | Asexual          | `r bam_asex_n` (`r bam_asexual`%)        | `r bp_asex_n` (`r bp_asexual`%)        | `r total_asex_n` (1.52%)      |
+
+\*While 69 participants attended the intervention sessions, only 66 participants completed the demographics survey.
 
 Table 1: Demographics of participants at baseline.
 
