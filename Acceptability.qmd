@@ -1,0 +1,10 @@
+---
+title: "Acceptability"
+editor: visual
+---
+
+# Acceptability
+
+Attrition rate for the BAM intervention was 5% with only 2 participants dropping from the study between the first and second sessions, thus confirming our hypothesis of the BAM intervention attrition being less than 20%.
+
+Some participants were also asked to complete a feedback survey about their experience with the BAM intervention at both the post session and 8-week post session time points.

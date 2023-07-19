@@ -131,11 +131,16 @@ total_asex_n <- bam_asex_n + bp_asex_n
 ```
 
 ```{r message=FALSE, echo=FALSE, warning=FALSE}
+bp_age_excluded <- bp_data$age[-8]
 age_excluded <- dem_data$age[-15]
-mean_age <- round(mean(age_excluded, na.rm = TRUE), 2)
+mean_bp_age <- round(mean(bp_age_excluded, na.rm = TRUE), 2)
 excluded_data <- dem_data[-15, ]
 oldest_age <- max(excluded_data$age, na.rm = TRUE)
 youngest_age <- min(excluded_data$age, na.rm = TRUE)
+mean_bam_age <- round(mean(bam_data$age, na.rm = TRUE), 2)
+age_excluded <- dem_data$age[-15]
+mean_age <- round(mean(age_excluded, na.rm = TRUE), 2)
+
 
 
 percent_white <- round((mean(dem_data$dcf_race == 1, na.rm = TRUE) * 100), 2)
@@ -155,15 +160,31 @@ percent_student <- round((mean(dem_data$dcf_student == 1, na.rm = TRUE) * 100), 
 sum_student <- sum(dem_data$dcf_student, na.rm = TRUE)
 ```
 
-Participants (N = 69) were randomly assigned to either the BAM (N=40) or the Body Project (N=29) intervention. Of these, 32 attended the interventions virtually (BAM: N=18, BP: N=16) beginning 10/20 and ending 02/22 due to the pandemic and 37 attended in-person sessions (BAM: N=24, BP: N=13) between 03/22 to 04/23. Participants ranged in age from `r youngest_age` -- `r oldest_age` years with the average age being `r mean_age` years. Participants were mostly women (`r percent_women`%) and and the most commonly reported race was White (N = `r percent_white`%). Furthermore, the majority of participants identified as heterosexual (`r percent_heterosexual`%) followed by bisexual (`r percent_bisexual`%). At the time of the intervention, `r sum_student` participants reported being students. For a study flow diagram, see Figure 1.
+```{r message=FALSE, echo=FALSE, warning=FALSE}
+###Anovas to compare group dems###
+
+dem_data$dcf_group <- factor(dem_data$dcf_group, levels = c(0, 1), labels = c("Body Project", "BAM"))
+
+sex_anova <- aov(dcf_research_sexual ~ dcf_group, data = dem_data)
+summary(sex_anova)
+
+gender_anova <- aov(dcf_research_gender ~ dcf_group, data = dem_data)
+summary(gender_anova)
+
+race_anova <- aov(dcf_race ~ dcf_group, data = dem_data)
+summary(race_anova)
+```
+
+Participants (N = 66) were randomly assigned to either the BAM (N=37) or the Body Project (N=29) intervention. Of these, 29 attended the interventions virtually (BAM: N=14, BP: N= 15) beginning 10/20 and ending 02/22 due to the pandemic and 37 attended in-person sessions (BAM: N=24, BP: N=13) between 03/22 to 04/23. Participants ranged in age from `r youngest_age` -- `r oldest_age` years with the average age being `r mean_age` years. Participants were mostly women (`r percent_women`%) and and the most commonly reported race was White (N = `r percent_white`%). Furthermore, the majority of participants identified as heterosexual (`r percent_heterosexual`%) followed by bisexual (`r percent_bisexual`%). At the time of the intervention, `r sum_student` participants reported being students. Analyses using a one-way analysis of variance (ANOVA) showed the two groups did not significantly vary based on gender, race, or sexuality. For a study flow diagram, see Figure 1.
 
 | Demographics     | BAM                                      | Body Project                           | Total                         |
-|------------------|------------------|------------------|------------------|
-| n                | 38 (58%)                                 | 28 (42%)                               | 66 (100%)\*                   |
+|-----------------|--------------------|-------------------|-----------------|
+| n                | 37 (56%)                                 | 29 (44%)                               | 66 (100%)                     |
 | *Gender*         |                                          |                                        |                               |
 | Female           | `r bam_women_n` (`r bam_women`%)         | `r bp_women_n` (`r bp_women`%)         | `r total_women_n` (95.45%)    |
 | Male             | `r bam_men_n` (`r bam_men`%)             | `r bp_men_n` (`r bp_men`%)             | `r total_men_n` (3.03%)       |
 | Nonbinary        | `r bam_nonbinary_n` (`r bam_nonbinary`%) | `r bp_nonbinary_n` (`r bp_nonbinary`%) | `r total_nonbinary_n` (1.52%) |
+| *Mean Age*       | `r mean_bam_age`                         | `r mean_bp_age`                        | `r mean_age`                  |
 | *Race*           |                                          |                                        |                               |
 | White            | `r bam_white_n` (`r bam_white`%)         | `r bp_white_n` (`r bp_white`%)         | `r total_white_n` (75.76%)    |
 | Black            | `r bam_black_n` (`r bam_black`%)         | `r bp_black_n` (`r bp_black`%)         | `r total_black_n` (3.03%)     |
@@ -176,8 +197,6 @@ Participants (N = 69) were randomly assigned to either the BAM (N=40) or the Bod
 | Homosexual       | `r bam_homo_n` (`r bam_homosexual`%)     | `r bp_homo_n` (`r bp_homosexual`%)     | `r total_homo_n` (1.52%)      |
 | Bisexual         | `r bam_bi_n` (`r bam_bisexual`%)         | `r bp_bi_n` (`r bp_bisexual`%)         | `r total_bi_n` (27.27%)       |
 | Asexual          | `r bam_asex_n` (`r bam_asexual`%)        | `r bp_asex_n` (`r bp_asexual`%)        | `r total_asex_n` (1.52%)      |
-
-\*While 69 participants attended the intervention sessions, only 66 participants completed the demographics survey.
 
 Table 1: Demographics of participants at baseline.
 
