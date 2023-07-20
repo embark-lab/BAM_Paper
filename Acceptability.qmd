@@ -5,6 +5,55 @@ editor: visual
 
 # Acceptability
 
-Attrition rate for the BAM intervention was 5% with only 2 participants dropping from the study between the first and second sessions, thus confirming our hypothesis of the BAM intervention attrition being less than 20%.
+```{r message=FALSE, echo=FALSE, warning=FALSE}
+library(readxl)
+library(scorekeeper)
+library(tidyverse)
+
+dem_pre_scoresheet <-
+read_excel("Demographics/Demographics_preschedule.xlsx")
+raw_pre_data <-
+read.csv("Demographics/demographics_pre_data.csv")
+
+dem_pre_data <-
+scorekeep(raw_pre_data, dem_pre_scoresheet)[[4]] 
+```
+
+```{r message=FALSE, echo=FALSE, warning=FALSE}
+##demographics postscheduled##
+
+raw_post_data <-
+  read_csv("Demographics/Demographics_post_data.csv")
+
+dem_post_scoresheet <-
+  read_excel("Demographics/Demographics_postschedule.xlsx")
+
+dem_post_data <-
+  scorekeep(raw_post_data, dem_post_scoresheet)[[5]]
+```
+
+```{r message=FALSE, echo=FALSE, warning=FALSE}
+dem_data <- full_join(dem_pre_data, dem_post_data)
+dem_data$dcf_age <- as.Date(dem_data$dcf_age, format = "%m/%d/%y")
+dem_data$dcf_date <- as.Date(dem_data$dcf_date, format = "%m/%d/%y")
+dem_data$age <- floor(as.numeric(difftime(dem_data$dcf_date, dem_data$dcf_age, units = "days")) / 365.25)
+```
+
+```{r message=FALSE, echo=FALSE, warning=FALSE}
+###Anovas to compare group dems###
+
+dem_data$dcf_group <- factor(dem_data$dcf_group, levels = c(0, 1), labels = c("Body Project", "BAM"))
+
+sex_anova <- aov(dcf_research_sexual ~ dcf_group, data = dem_data)
+summary(sex_anova)
+
+gender_anova <- aov(dcf_research_gender ~ dcf_group, data = dem_data)
+summary(gender_anova)
+
+race_anova <- aov(dcf_race ~ dcf_group, data = dem_data)
+summary(race_anova)
+```
+
+Analyses using a one-way analysis of variance (ANOVA) showed the two groups did not significantly vary based on gender, race, or sexuality. Attrition rate for the BAM intervention was 5% with only 2 participants dropping from the study between the first and second sessions, thus confirming our hypothesis of the BAM intervention attrition being less than 20%. Zero participants dropped out of the Body Project group between intervention sessions. Fifty participants (BAM: N = 26; Body Project: N = 24) completed study activities at all three time points and attended both intervention sessions.
 
 Some participants were also asked to complete a feedback survey about their experience with the BAM intervention at both the post session and 8-week post session time points.

@@ -1,9 +1,9 @@
 ---
-title: "Results"
+title: "Intervention Effects"
 editor: visual
 ---
 
-# Results
+# Intervention Effects
 
 ```{r message=FALSE, echo=FALSE, warning=FALSE}
 ### N for participants at each timepoint###
