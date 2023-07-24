@@ -3,12 +3,16 @@ project:
 
 book:
   title: "BAM Manuscript"
-  author: "Jane Doe"
+  author: "Pictor, L., Laboe, A., Dillon, K., Gavuji, M., Frank, M., & Schaumberg, K."
   date: "6/5/2023"
   chapters:
     - index.qmd
     - Sample_Description.qmd
-    - summary.qmd
+    - Feasibility.qmd
+    - Acceptability.qmd
+    - Intervention_Effects.qmd
+    - InterventionEffects.KS.qmd
+    - tabs/results_tables.RData
     - references.qmd
 
 bibliography: references.bib

@@ -46,13 +46,10 @@ dem_data$age <- floor(as.numeric(difftime(dem_data$dcf_date, dem_data$dcf_age, u
 dem_data$dcf_group <- factor(dem_data$dcf_group, levels = c(0, 1), labels = c("Body Project", "BAM"))
 
 sex_anova <- aov(dcf_research_sexual ~ dcf_group, data = dem_data)
-summary(sex_anova)
 
 gender_anova <- aov(dcf_research_gender ~ dcf_group, data = dem_data)
-summary(gender_anova)
 
 race_anova <- aov(dcf_race ~ dcf_group, data = dem_data)
-summary(race_anova)
 ```
 
 Analyses using a one-way analysis of variance (ANOVA) showed the two groups did not significantly vary based on gender, race, or sexuality. Attrition rate for the BAM intervention was 5% with only 2 participants dropping from the study between the first and second sessions, thus confirming our hypothesis of the BAM intervention attrition being less than 20%. Zero participants dropped out of the Body Project group between intervention sessions. Fifty participants (BAM: N = 26; Body Project: N = 24) completed study activities at all three time points and attended both intervention sessions.
