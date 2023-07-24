@@ -1,0 +1,173 @@
+---
+title: "Intervention Effects KS"
+format: html
+editor: visual
+---
+
+# Intervention Effects
+
+```{r message=FALSE, echo=FALSE, warning=FALSE}
+library(haven)
+library(dplyr)
+library(ggplot2)
+library(reshape2)
+library(patchwork)
+library(cgwtools)
+load("Data/BAM_redcap_long_merged.2023_07_14.RData")
+completers <- unique(with(BAM_redcap_long_merged, id[ave(timepoint, id, FUN = function(x) length(unique(x))) == 3]))
+target_vars <- c('gffs_sum_25', 'umb_total_sum_complete', 'epsi_neg_obese_25', 'sataq_average', 'ibss_mean_25')
+```
+
+```{r}
+
+mean_list <- list()
+
+for (i in target_vars) { 
+  mean_df <- BAM_redcap_long_merged %>%
+    filter(!is.na(timepoint), id %in% completers) %>%
+    group_by(timepoint, group) %>%
+    summarise(Mean = mean(!!sym(i), na.rm = TRUE), Variable = i)  # Use !!sym(i) to refer to the variable name dynamically
+    
+  mean_list[[i]] <- mean_df
+}
+  
+# Create a data frame with the results
+mean_df <- do.call(rbind, mean_list)
+
+save(mean_df, file = 'tabs/results_tables.RData')
+
+
+```
+
+```{r}
+
+# Assuming you have the dataset BAM_redcap_long_merged and target_vars defined as before
+
+# Filter BAM_redcap_long_merged to include only completers with all three timepoints
+completers <- unique(with(BAM_redcap_long_merged, id[ave(timepoint, id, FUN = function(x) length(unique(x))) == 3]))
+
+# Function to calculate Cohen's d effect size
+calculate_cohens_d <- function(mean1, mean2, sd_pooled) {
+  mean_diff <- mean1 - mean2
+  return(mean_diff / sd_pooled)
+}
+
+
+# Function to calculate pooled standard deviation
+pooled_sd <- function(n1, sd1, n2, sd2) {
+  return(sqrt(((n1 - 1) * sd1^2 + (n2 - 1) * sd2^2) / (n1 + n2 - 2)))
+}
+
+effect_sizes_list <- list()
+
+for (i in target_vars) {
+  # Filter the data for the current target variable and only completers
+  filtered_data <- BAM_redcap_long_merged %>%
+    filter(id %in% completers) %>%
+    select(group, timepoint, !!sym(i))
+  
+  # Calculate the means and standard deviations for each timepoint within each group
+  means_sd <- filtered_data %>%
+    group_by(group, timepoint) %>%
+    summarise(
+      Mean = mean(!!sym(i), na.rm = TRUE),
+      SD = sd(!!sym(i), na.rm = TRUE)
+    )
+  
+  # Extract the mean and standard deviation for each timepoint
+  baseline_mean <- means_sd %>%
+    filter(timepoint == "baseline") %>%
+    pull(Mean)
+  post_mean <- means_sd %>%
+    filter(timepoint == "post") %>%
+    pull(Mean)
+  week8_mean <- means_sd %>%
+    filter(timepoint == "8wk") %>%
+    pull(Mean)
+  
+  baseline_sd <- means_sd %>%
+    filter(timepoint == "baseline") %>%
+    pull(SD)
+  post_sd <- means_sd %>%
+    filter(timepoint == "post") %>%
+    pull(SD)
+  week8_sd <- means_sd %>%
+    filter(timepoint == "8wk") %>%
+    pull(SD)
+  
+  # Calculate Cohen's d effect size for baseline-post and baseline-8wk comparisons within each group
+  cohen_d_baseline_post <- calculate_cohens_d(post_mean, baseline_mean, pooled_sd(nrow(filtered_data %>% filter(timepoint == "post")), post_sd, nrow(filtered_data %>% filter(timepoint == "baseline")), baseline_sd))
+  cohen_d_baseline_8_week <- calculate_cohens_d(week8_mean, baseline_mean, pooled_sd(nrow(filtered_data %>% filter(timepoint == "8wk")), week8_sd, nrow(filtered_data %>% filter(timepoint == "baseline")), baseline_sd))
+  
+  # Create a data frame to store the effect sizes for the current target variable
+  result <- data.frame(
+    group = unique(filtered_data$group),
+    Variable = i,
+    Cohens_d_baseline_post = cohen_d_baseline_post,
+    Cohens_d_baseline_8_week = cohen_d_baseline_8_week
+  )
+  
+  effect_sizes_list[[i]] <- result
+}
+
+# Combine all effect sizes for different target variables into a single data frame
+effect_sizes_df <- do.call(rbind, effect_sizes_list)
+
+resave(effect_sizes_df, file = 'tabs/results_tables.RData')
+
+```
+
+```{r}
+rm(list = ls()[!ls() %in% c("BAM_redcap_long_merged", "mean_df", "effect_sizes_df", 'completers', 'target_vars')])
+```
+
+```{r}
+
+
+
+# Function to calculate standard error
+standard_error <- function(x) {
+  return(sd(x, na.rm = TRUE) / sqrt(length(x)))
+}
+
+# Create a list to store the ggplot objects
+ggplot_list <- list()
+
+for (i in target_vars) {
+  # Filter the data for the current target variable and only completers
+  filtered_data <- BAM_redcap_long_merged %>%
+    filter(id %in% completers) %>%
+    select(group, timepoint, !!sym(i))
+
+  
+    filtered_data$timepoint <- factor(filtered_data$timepoint, levels = c("baseline", "post", "8wk"))
+    
+  # Calculate the means and standard errors for each timepoint within each group
+  means_se <- filtered_data %>%
+    group_by(group, timepoint) %>%
+    summarise(
+      Mean = mean(!!sym(i), na.rm = TRUE),
+      SE = standard_error(!!sym(i))
+    )
+  
+  # Plot the line graph with separate lines for each group
+  p <- ggplot(means_se, aes(x = timepoint, y = Mean, group = group, color = group)) +
+    geom_line() +
+    geom_point() +
+    geom_errorbar(aes(ymin = Mean - SE, ymax = Mean + SE), width = 0.1) +
+    labs(title = paste(i), x = "Timepoint", y = "Mean", color = "Group") +
+    theme_minimal()
+  
+  ggplot_list[[i]] <- p
+}
+
+combined_plots <- ggplot_list[[1]] + plot_layout(ncol = 2)
+for (i in 2:length(target_vars)) {
+  combined_plots <- combined_plots + ggplot_list[[i]]
+}
+
+combined_plots
+ggsave(plot = combined_plots, file = 'figs/targets.png')
+```
+
+\`\`\`

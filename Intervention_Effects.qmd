@@ -7,6 +7,11 @@ editor: visual
 # Intervention Effects
 
 ```{r message=FALSE, echo=FALSE, warning=FALSE}
+library(haven)
+library(dplyr)
+```
+
+```{r message=FALSE, echo=FALSE, warning=FALSE}
 ### N for participants at each timepoint###
 load("/Volumes/kschaumberg/BAM/EDJTP Pilot Paper/BAM_Paper/Data/BAM_redcap_long_merged.2023_07_14.RData")
 fp_base_dataset <- subset(BAM_redcap_long_merged, group == 'FP' & timepoint == 'baseline')
