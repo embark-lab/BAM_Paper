@@ -6,4 +6,4 @@ editor: visual
 
 # Feasibility
 
-To ensure peer facilitators presented the intervention scripts accurately, all sessions were audio recorded and reviewed by two research coordinators to assess for fidelity. Coordinators rated each intervention section on a score of 0-10 based on how exact facilitators presented the material.
+To ensure peer facilitators presented the intervention scripts accurately, all sessions were audio recorded and reviewed by two research coordinators to assess for fidelity. Coordinators rated each intervention section on a score of 0-10 based on how exact facilitators presented the material. The Cohen's Kappa between the two reviewers was k = 0.79, indicating substantial agreement between reviewers. The average score for BAM intervention adherence was N = 8.95 and the Body Project's average score was N = 9.15, confirming our hypothesis that intervention adherence would be greater than 8.0 and suggesting the interventions were both presented with fidelity.

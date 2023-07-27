@@ -13,7 +13,7 @@ library(dplyr)
 
 ```{r message=FALSE, echo=FALSE, warning=FALSE}
 ### N for participants at each timepoint###
-load("/Volumes/kschaumberg/BAM/EDJTP Pilot Paper/BAM_Paper/Data/BAM_redcap_long_merged.2023_07_14.RData")
+load("Data/BAM_redcap_long_merged.2023-07-26.RData")
 fp_base_dataset <- subset(BAM_redcap_long_merged, group == 'FP' & timepoint == 'baseline')
 bp_base_dataset <- subset(BAM_redcap_long_merged, group == 'BP' & timepoint == 'baseline')
 
@@ -39,196 +39,293 @@ bam_8week <- subset(BAM_dataset, timepoint == '8wk')
 bp_baseline <- subset(Body_Project_dataset, timepoint == 'baseline')
 bp_post <- subset(Body_Project_dataset, timepoint == 'post')
 bp_8wk <- subset(Body_Project_dataset, timepoint == '8wk')
-```
 
-## Fatphobia
+```
 
 ```{r message=FALSE, echo=FALSE, warning=FALSE}
 ###BAM GFFS analysis###
-mean_fp_gffs_base <- mean(bam_baseline$gffs_sum_25,na.rm = TRUE)
-mean_fp_gffs_post <- mean(bam_post$gffs_sum_25,na.rm = TRUE)
-mean_fp_gffs_wk8 <- mean(bam_8week$gffs_sum_25,na.rm = TRUE)
+mean_fp_gffs_base <- round(mean(bam_baseline$gffs_sum_25,na.rm = TRUE), 2)
+mean_fp_gffs_post <- round(mean(bam_post$gffs_sum_25,na.rm = TRUE), 2)
+mean_fp_gffs_wk8 <- round(mean(bam_8week$gffs_sum_25,na.rm = TRUE), 2)
 
-sd_fp_gffs_base <- sd(bam_baseline$gffs_sum_25,na.rm = TRUE)
-sd_fp_gffs_post <- sd(bam_post$gffs_sum_25,na.rm = TRUE)
-sd_fp_gffs_wk8 <- sd(bam_8week$gffs_sum_25,na.rm = TRUE)
+sd_fp_gffs_base <- round(sd(bam_baseline$gffs_sum_25,na.rm = TRUE), 2)
+sd_fp_gffs_post <- round(sd(bam_post$gffs_sum_25,na.rm = TRUE), 2)
+sd_fp_gffs_wk8 <- round(sd(bam_8week$gffs_sum_25,na.rm = TRUE), 2)
 
-cd_fp_gffs_base_post <- (mean_fp_gffs_post - mean_fp_gffs_base) / sqrt((sd_fp_gffs_base^2 + sd_fp_gffs_post^2) / 2)
-cd_fp_gffs_base_wk8 <- (mean_fp_gffs_wk8 - mean_fp_gffs_base) / sqrt((sd_fp_gffs_base^2 + sd_fp_gffs_wk8^2) / 2)
-cd_fp_gffs_post_wk8 <- (mean_fp_gffs_wk8 - mean_fp_gffs_post) / sqrt((sd_fp_gffs_post^2 + sd_fp_gffs_wk8^2) / 2)
+cd_fp_gffs_base_post <- round((mean_fp_gffs_post - mean_fp_gffs_base) / sqrt((sd_fp_gffs_base^2 + sd_fp_gffs_post^2) / 2), 2)
+cd_fp_gffs_base_wk8 <- round((mean_fp_gffs_wk8 - mean_fp_gffs_base) / sqrt((sd_fp_gffs_base^2 + sd_fp_gffs_wk8^2) / 2), 2)
+cd_fp_gffs_post_wk8 <- round((mean_fp_gffs_wk8 - mean_fp_gffs_post) / sqrt((sd_fp_gffs_post^2 + sd_fp_gffs_wk8^2) / 2), 2)
 
 ###BP GFFS Analysis###
-mean_bp_gffs_base <- mean(bp_baseline$gffs_sum_25,na.rm = TRUE)
-mean_bp_gffs_post <- mean(bp_post$gffs_sum_25,na.rm = TRUE)
-mean_bp_gffs_wk8 <- mean(bp_8wk$gffs_sum_25,na.rm = TRUE)
+mean_bp_gffs_base <- round(mean(bp_baseline$gffs_sum_25,na.rm = TRUE), 2)
+mean_bp_gffs_post <- round(mean(bp_post$gffs_sum_25,na.rm = TRUE), 2)
+mean_bp_gffs_wk8 <- round(mean(bp_8wk$gffs_sum_25,na.rm = TRUE), 2)
 
-sd_bp_gffs_base <- sd(bp_baseline$gffs_sum_25,na.rm = TRUE)
-sd_bp_gffs_post <- sd(bp_post$gffs_sum_25,na.rm = TRUE)
-sd_bp_gffs_wk8 <- sd(bp_8wk$gffs_sum_25,na.rm = TRUE)
+sd_bp_gffs_base <- round(sd(bp_baseline$gffs_sum_25,na.rm = TRUE), 2)
+sd_bp_gffs_post <- round(sd(bp_post$gffs_sum_25,na.rm = TRUE), 2)
+sd_bp_gffs_wk8 <- round(sd(bp_8wk$gffs_sum_25,na.rm = TRUE), 2)
 
-cd_bp_gffs_base_post <- (mean_bp_gffs_post - mean_bp_gffs_base) / sqrt((sd_bp_gffs_base^2 + sd_bp_gffs_post^2) / 2)
-cd_bp_gffs_base_wk8 <- (mean_bp_gffs_wk8 - mean_bp_gffs_base) / sqrt((sd_bp_gffs_base^2 + sd_bp_gffs_wk8^2) / 2)
-cd_bp_gffs_post_wk8 <- (mean_bp_gffs_wk8 - mean_bp_gffs_post) / sqrt((sd_bp_gffs_post^2 + sd_bp_gffs_wk8^2) / 2)
+cd_bp_gffs_base_post <- round((mean_bp_gffs_post - mean_bp_gffs_base) / sqrt((sd_bp_gffs_base^2 + sd_bp_gffs_post^2) / 2), 2)
+cd_bp_gffs_base_wk8 <- round((mean_bp_gffs_wk8 - mean_bp_gffs_base) / sqrt((sd_bp_gffs_base^2 + sd_bp_gffs_wk8^2) / 2), 2)
+cd_bp_gffs_post_wk8 <- round((mean_bp_gffs_wk8 - mean_bp_gffs_post) / sqrt((sd_bp_gffs_post^2 + sd_bp_gffs_wk8^2) / 2), 2)
 ```
 
-Fatphobia was assessed at the three time points for both BAM (N = 26) and Body Project (N = 24) participants using the Goldfarb Fear of Fat Scale [@goldfarbGoldfarbFearFat1985].
-
-Within the BAM group, the effect sizes for GFFS were as follows:
-
--   The effect size between baseline and post-session was `r cd_fp_gffs_base_post`, indicating \[interpretation of effect size\].
-
--   The effect size between baseline and 8 weeks was `r cd_fp_gffs_base_wk8`, indicating \[interpretation of effect size\].
-
--   The effect size between post-session and 8 weeks was `r cd_fp_gffs_post_wk8`, indicating \[interpretation of effect size\].
-
-Within the Body Project group, the effect sizes for GFFS were as follows:
-
--   The effect size between baseline and post-session was `r cd_bp_gffs_base_post`, indicating \[interpretation of effect size\].
-
--   The effect size between baseline and 8 weeks was `r cd_bp_gffs_base_wk8`, indicating \[interpretation of effect size\].
-
--   The effect size between post-session and 8 weeks was `r cd_bp_gffs_post_wk8`, indicating \[interpretation of effect size\].
-
-## Anti-fat Bias
-
 ```{r message=FALSE, echo=FALSE, warning=FALSE}
+bam_baseline$umb_total_sum_25 <- as.numeric(bam_baseline$umb_total_sum_25)
+
 ###BAM UMB-FAT analysis###
-mean_fp_umbfat_base <- mean(bam_baseline$umb_total_sum)
-mean_fp_umbfat_post <- mean(bam_post$umb_total_sum)
-mean_fp_umbfat_wk8 <- mean(bam_8week$umb_total_sum)
+mean_fp_umbfat_base <- round(mean(bam_baseline$umb_total_sum_25, na.rm = TRUE), 2)
+mean_fp_umbfat_post <- round(mean(bam_post$umb_total_sum_25, na.rm = TRUE), 2)
+mean_fp_umbfat_wk8 <- round(mean(bam_8week$umb_total_sum_25, na.rm = TRUE), 2)
 
-sd_fp_umbfat_base <- sd(bam_baseline$umb_total_sum)
-sd_fp_umbfat_post <- sd(bam_post$umb_total_sum)
-sd_fp_umbfat_wk8 <- sd(bam_8week$umb_total_sum)
+sd_fp_umbfat_base <- round(sd(bam_baseline$umb_total_sum_25, na.rm = TRUE), 2)
+sd_fp_umbfat_post <- round(sd(bam_post$umb_total_sum_25, na.rm = TRUE), 2)
+sd_fp_umbfat_wk8 <- round(sd(bam_8week$umb_total_sum_25, na.rm = TRUE), 2)
 
-cd_fp_umbfat_base_post <- (mean_fp_umbfat_post - mean_fp_umbfat_base) / sqrt((sd_fp_umbfat_base^2 + sd_fp_umbfat_post^2) / 2)
-cd_fp_umbfat_base_wk8 <- (mean_fp_umbfat_wk8 - mean_fp_umbfat_base) / sqrt((sd_fp_umbfat_base^2 + sd_fp_umbfat_wk8^2) / 2)
-cd_fp_umbfat_post_wk8 <- (mean_fp_umbfat_wk8 - mean_fp_umbfat_post) / sqrt((sd_fp_umbfat_post^2 + sd_fp_umbfat_wk8^2) / 2)
+cd_fp_umbfat_base_post <- round((mean_fp_umbfat_post - mean_fp_umbfat_base) / sqrt((sd_fp_umbfat_base^2 + sd_fp_umbfat_post^2) / 2), 2)
+cd_fp_umbfat_base_wk8 <- round((mean_fp_umbfat_wk8 - mean_fp_umbfat_base) / sqrt((sd_fp_umbfat_base^2 + sd_fp_umbfat_wk8^2) / 2), 2)
+cd_fp_umbfat_post_wk8 <- round((mean_fp_umbfat_wk8 - mean_fp_umbfat_post) / sqrt((sd_fp_umbfat_post^2 + sd_fp_umbfat_wk8^2) / 2), 2)
 
 ###BP UMB-FAT analysis###
-mean_bp_umbfat_base <- mean(bp_baseline$umb_total_sum)
-mean_bp_umbfat_post <- mean(bp_post$umb_total_sum)
-mean_bp_umbfat_wk8 <- mean(bp_8wk$umb_total_sum)
+mean_bp_umbfat_base <- round(mean(bp_baseline$umb_total_sum_25, na.rm = TRUE), 2)
+mean_bp_umbfat_post <- round(mean(bp_post$umb_total_sum_25, na.rm = TRUE), 2)
+mean_bp_umbfat_wk8 <- round(mean(bp_8wk$umb_total_sum_25, na.rm = TRUE), 2)
 
-sd_bp_umbfat_base <- sd(bp_baseline$umb_total_sum)
-sd_bp_umbfat_post <- sd(bp_post$umb_total_sum)
-sd_bp_umbfat_wk8 <- sd(bp_8wk$umb_total_sum)
+sd_bp_umbfat_base <- round(sd(bp_baseline$umb_total_sum_25, na.rm = TRUE), 2)
+sd_bp_umbfat_post <- round(sd(bp_post$umb_total_sum_25, na.rm = TRUE), 2)
+sd_bp_umbfat_wk8 <- round(sd(bp_8wk$umb_total_sum_25, na.rm = TRUE), 2)
 
-cd_bp_umbfat_base_post <- (mean_bp_umbfat_post - mean_bp_umbfat_base) / sqrt((sd_bp_umbfat_base^2 + sd_bp_umbfat_post^2) / 2)
-cd_bp_umbfat_base_wk8 <- (mean_bp_umbfat_wk8 - mean_bp_umbfat_base) / sqrt((sd_bp_umbfat_base^2 + sd_bp_umbfat_wk8^2) / 2)
-cd_bp_umbfat_post_wk8 <- (mean_bp_umbfat_wk8 - mean_bp_umbfat_post) / sqrt((sd_bp_umbfat_post^2 + sd_bp_umbfat_wk8^2) / 2)
+cd_bp_umbfat_base_post <- round((mean_bp_umbfat_post - mean_bp_umbfat_base) / sqrt((sd_bp_umbfat_base^2 + sd_bp_umbfat_post^2) / 2), 2)
+cd_bp_umbfat_base_wk8 <- round((mean_bp_umbfat_wk8 - mean_bp_umbfat_base) / sqrt((sd_bp_umbfat_base^2 + sd_bp_umbfat_wk8^2) / 2), 2)
+cd_bp_umbfat_post_wk8 <- round((mean_bp_umbfat_wk8 - mean_bp_umbfat_post) / sqrt((sd_bp_umbfat_post^2 + sd_bp_umbfat_wk8^2) / 2), 2)
 ```
 
 ```{r message=FALSE, echo=FALSE, warning=FALSE}
 ###BAM EPSI subscale analysis###
+mean_fp_epsi_base <- round(mean(bam_baseline$epsi_neg_obese_25, na.rm = TRUE), 2)
+mean_fp_epsi_post <- round(mean(bam_post$epsi_neg_obese_25, na.rm = TRUE), 2)
+mean_fp_epsi_wk8 <- round(mean(bam_8week$epsi_neg_obese_25, na.rm = TRUE), 2)
+
+sd_fp_epsi_base <- round(sd(bam_baseline$epsi_neg_obese_25, na.rm = TRUE), 2)
+sd_fp_epsi_post <- round(sd(bam_post$epsi_neg_obese_25, na.rm = TRUE), 2)
+sd_fp_epsi_wk8 <- round(sd(bam_8week$epsi_neg_obese_25, na.rm = TRUE), 2)
+
+cd_fp_epsi_base_post <- round((mean_fp_epsi_post - mean_fp_epsi_base) / sqrt((sd_fp_epsi_base^2 + sd_fp_epsi_post^2) / 2), 2)
+cd_fp_epsi_base_wk8 <- round((mean_fp_epsi_wk8 - mean_fp_epsi_base) / sqrt((sd_fp_epsi_base^2 + sd_fp_epsi_wk8^2) / 2), 2)
+
+###BP EPSI subscale analysis###
+mean_bp_epsi_base <- round(mean(bp_baseline$epsi_neg_obese_25, na.rm = TRUE), 2)
+mean_bp_epsi_post <- round(mean(bp_post$epsi_neg_obese_25, na.rm = TRUE), 2)
+mean_bp_epsi_wk8 <- round(mean(bp_8wk$epsi_neg_obese_25, na.rm = TRUE), 2)
+
+sd_bp_epsi_base <- round(sd(bp_baseline$epsi_neg_obese_25, na.rm = TRUE), 2)
+sd_bp_epsi_post <- round(sd(bp_post$epsi_neg_obese_25, na.rm = TRUE), 2)
+sd_bp_epsi_wk8 <- round(sd(bp_8wk$epsi_neg_obese_25, na.rm = TRUE), 2)
+
+cd_bp_epsi_base_post <- round((mean_bp_epsi_post - mean_bp_epsi_base) / sqrt((sd_bp_epsi_base^2 + sd_bp_epsi_post^2) / 2), 2)
+
+cd_bp_epsi_base_wk8 <- round((mean_bp_epsi_wk8 - mean_bp_epsi_base) / sqrt((sd_bp_epsi_base^2 + sd_bp_epsi_wk8^2) / 2), 2)
 ```
-
-Anti-fat Bias was also assessed at all three time points using the Universal Measure of Bias-FAT (UMB-FAT)[@dursoUnderstandingSelfdirectedStigma2008] and the Eating Pathology Symptoms Inventory (EPSI) negative attitudes toward obesity subcale [@coniglioFactorialIntegrityValidation2018].
-
-Within the BAM group, the effect sizes for UMB-FAT were as follows:
-
--   The effect size between baseline and post-session was `r cd_fp_umbfat_base_post`, indicating \[interpretation of effect size\].
-
--   The effect size between baseline and 8 weeks was `r cd_fp_umbfat_base_wk8`, indicating \[interpretation of effect size\].
-
--   The effect size between post-session and 8 weeks was `r cd_fp_umbfat_post_wk8`, indicating \[interpretation of effect size\].
-
-Within the Body Project group, the effect sizes for UMB-FAT were as follows:
-
--   The effect size between baseline and post-session was `r cd_bp_umbfat_base_post`, indicating \[interpretation of effect size\].
-
--   The effect size between baseline and 8 weeks was `r cd_bp_umbfat_base_wk8`, indicating \[interpretation of effect size\].
-
--   The effect size between post-session and 8 weeks was `r cd_bp_umbfat_post_wk8`, indicating \[interpretation of effect size\].
-
-## Thin Ideal Internalization
 
 ```{r message=FALSE, echo=FALSE, warning=FALSE}
 ###BAM SATAQ Analysis###
-mean_fp_sataq_base <- mean(bam_baseline$sataq_average)
-mean_fp_sataq_post <- mean(bam_post$sataq_average)
-mean_fp_sataq_wk8 <- mean(bam_8week$sataq_average)
+mean_fp_sataq_base <- round(mean(bam_baseline$sataq_average_25, na.rm = TRUE), 2)
+mean_fp_sataq_post <- round(mean(bam_post$sataq_average_25, na.rm = TRUE), 2)
+mean_fp_sataq_wk8 <- round(mean(bam_8week$sataq_average_25, na.rm = TRUE), 2)
 
-sd_fp_sataq_base <- sd(bam_baseline$sataq_average)
-sd_fp_sataq_post <- sd(bam_post$sataq_average)
-sd_fp_sataq_wk8 <- sd(bam_8week$sataq_average)
+sd_fp_sataq_base <- round(sd(bam_baseline$sataq_average_25, na.rm = TRUE), 2)
+sd_fp_sataq_post <- round(sd(bam_post$sataq_average_25, na.rm = TRUE), 2)
+sd_fp_sataq_wk8 <- round(sd(bam_8week$sataq_average_25, na.rm = TRUE), 2)
 
-cd_fp_sataq_base_post <- (mean_fp_sataq_post - mean_fp_sataq_base) / sqrt((sd_fp_sataq_base^2 + sd_fp_sataq_post^2) / 2)
-cd_fp_sataq_base_wk8 <- (mean_fp_sataq_wk8 - mean_fp_sataq_base) / sqrt((sd_fp_sataq_base^2 + sd_fp_sataq_wk8^2) / 2)
-cd_fp_sataq_post_wk8 <- (mean_fp_sataq_wk8 - mean_fp_sataq_post) / sqrt((sd_fp_sataq_post^2 + sd_fp_sataq_wk8^2) / 2)
+cd_fp_sataq_base_post <- round((mean_fp_sataq_post - mean_fp_sataq_base) / sqrt((sd_fp_sataq_base^2 + sd_fp_sataq_post^2) / 2), 2)
+cd_fp_sataq_base_wk8 <- round((mean_fp_sataq_wk8 - mean_fp_sataq_base) / sqrt((sd_fp_sataq_base^2 + sd_fp_sataq_wk8^2) / 2), 2)
+cd_fp_sataq_post_wk8 <- round((mean_fp_sataq_wk8 - mean_fp_sataq_post) / sqrt((sd_fp_sataq_post^2 + sd_fp_sataq_wk8^2) / 2), 2)
 
 ###BP SATAQ Analysis###
-mean_bp_sataq_base <- mean(bp_baseline$sataq_average)
-mean_bp_sataq_post <- mean(bp_post$sataq_average)
-mean_bp_sataq_wk8 <- mean(bp_8wk$sataq_average, na.rm = TRUE)
+mean_bp_sataq_base <- round(mean(bp_baseline$sataq_average_25, na.rm = TRUE), 2)
+mean_bp_sataq_post <- round(mean(bp_post$sataq_average_25, na.rm = TRUE), 2)
+mean_bp_sataq_wk8 <- round(mean(bp_8wk$sataq_average_25, na.rm = TRUE), 2)
 
-sd_bp_sataq_base <- sd(bp_baseline$sataq_average)
-sd_bp_sataq_post <- sd(bp_post$sataq_average)
-sd_bp_sataq_wk8 <- sd(bp_8wk$sataq_average, na.rm = TRUE)
+sd_bp_sataq_base <- round(sd(bp_baseline$sataq_average_25, na.rm = TRUE), 2)
+sd_bp_sataq_post <- round(sd(bp_post$sataq_average_25, na.rm = TRUE), 2)
+sd_bp_sataq_wk8 <- round(sd(bp_8wk$sataq_average_25, na.rm = TRUE), 2)
 
-cd_bp_sataq_base_post <- (mean_bp_sataq_post - mean_bp_sataq_base) / sqrt((sd_bp_sataq_base^2 + sd_bp_sataq_post^2) / 2)
-cd_bp_sataq_base_wk8 <- (mean_bp_sataq_wk8 - mean_bp_sataq_base) / sqrt((sd_bp_sataq_base^2 + sd_bp_sataq_wk8^2) / 2)
-cd_bp_sataq_post_wk8 <- (mean_bp_sataq_wk8 - mean_bp_sataq_post) / sqrt((sd_bp_sataq_post^2 + sd_bp_sataq_wk8^2) / 2)
+cd_bp_sataq_base_post <- round((mean_bp_sataq_post - mean_bp_sataq_base) / sqrt((sd_bp_sataq_base^2 + sd_bp_sataq_post^2) / 2), 2)
+cd_bp_sataq_base_wk8 <- round((mean_bp_sataq_wk8 - mean_bp_sataq_base) / sqrt((sd_bp_sataq_base^2 + sd_bp_sataq_wk8^2) / 2), 2)
+cd_bp_sataq_post_wk8 <- round((mean_bp_sataq_wk8 - mean_bp_sataq_post) / sqrt((sd_bp_sataq_post^2 + sd_bp_sataq_wk8^2) / 2), 2)
 ```
 
 ```{r message=FALSE, echo=FALSE, warning=FALSE}
 ###BAM IBSS-R Analysis###
-mean_fp_ibssr_base <- mean(bam_baseline$ibssr_mean_25, na.rm = TRUE)
-mean_fp_ibssr_post <- mean(bam_post$ibssr_mean_25, na.rm = TRUE)
-mean_fp_ibssr_wk8 <- mean(bam_8week$ibssr_mean_25, na.rm = TRUE)
+mean_fp_ibssr_base <- round(mean(bam_baseline$ibssr_mean_25, na.rm = TRUE), 2)
+mean_fp_ibssr_post <- round(mean(bam_post$ibssr_mean_25, na.rm = TRUE), 2)
+mean_fp_ibssr_wk8 <- round(mean(bam_8week$ibssr_mean_25, na.rm = TRUE), 2)
 
-sd_fp_ibssr_base <- sd(bam_baseline$ibssr_mean_25, na.rm = TRUE)
-sd_fp_ibssr_post <- sd(bam_post$ibssr_mean_25, na.rm = TRUE)
-sd_fp_ibssr_wk8 <- sd(bam_8week$ibssr_mean_25, na.rm = TRUE)
+sd_fp_ibssr_base <- round(sd(bam_baseline$ibssr_mean_25, na.rm = TRUE), 2)
+sd_fp_ibssr_post <- round(sd(bam_post$ibssr_mean_25, na.rm = TRUE), 2)
+sd_fp_ibssr_wk8 <- round(sd(bam_8week$ibssr_mean_25, na.rm = TRUE), 2)
 
-cd_fp_ibssr_base_post <- (mean_fp_ibssr_post - mean_fp_ibssr_base) / sqrt((sd_fp_ibssr_base^2 + sd_fp_ibssr_post^2) / 2)
-cd_fp_ibssr_base_wk8 <- (mean_fp_ibssr_wk8 - mean_fp_ibssr_base) / sqrt((sd_fp_ibssr_base^2 + sd_fp_ibssr_wk8^2) / 2)
-cd_fp_ibssr_post_wk8 <- (mean_fp_ibssr_wk8 - mean_fp_ibssr_post) / sqrt((sd_fp_ibssr_post^2 + sd_fp_ibssr_wk8^2) / 2)
+cd_fp_ibssr_base_post <- round((mean_fp_ibssr_post - mean_fp_ibssr_base) / sqrt((sd_fp_ibssr_base^2 + sd_fp_ibssr_post^2) / 2), 2)
+cd_fp_ibssr_base_wk8 <- round((mean_fp_ibssr_wk8 - mean_fp_ibssr_base) / sqrt((sd_fp_ibssr_base^2 + sd_fp_ibssr_wk8^2) / 2), 2)
+cd_fp_ibssr_post_wk8 <- round((mean_fp_ibssr_wk8 - mean_fp_ibssr_post) / sqrt((sd_fp_ibssr_post^2 + sd_fp_ibssr_wk8^2) / 2), 2)
 
 ###BP IBSSR Analysis###
-mean_bp_ibssr_base <- mean(bp_baseline$ibssr_mean_25, na.rm = TRUE)
-mean_bp_ibssr_post <- mean(bp_post$ibssr_mean_25, na.rm = TRUE)
-mean_bp_ibssr_wk8 <- mean(bp_8wk$ibssr_mean_25, na.rm = TRUE)
+mean_bp_ibssr_base <- round(mean(bp_baseline$ibssr_mean_25, na.rm = TRUE), 2)
+mean_bp_ibssr_post <-round( mean(bp_post$ibssr_mean_25, na.rm = TRUE), 2)
+mean_bp_ibssr_wk8 <- round(mean(bp_8wk$ibssr_mean_25, na.rm = TRUE), 2)
 
-sd_bp_ibssr_base <- sd(bp_baseline$ibssr_mean_25, na.rm = TRUE)
-sd_bp_ibssr_post <- sd(bp_post$ibssr_mean_25, na.rm = TRUE)
-sd_bp_ibssr_wk8 <- sd(bp_8wk$ibssr_mean_25, na.rm = TRUE)
+sd_bp_ibssr_base <- round(sd(bp_baseline$ibssr_mean_25, na.rm = TRUE), 2)
+sd_bp_ibssr_post <- round(sd(bp_post$ibssr_mean_25, na.rm = TRUE), 2)
+sd_bp_ibssr_wk8 <- round(sd(bp_8wk$ibssr_mean_25, na.rm = TRUE), 2)
 
-cd_bp_ibssr_base_post <- (mean_bp_ibssr_post - mean_bp_ibssr_base) / sqrt((sd_bp_ibssr_base^2 + sd_bp_ibssr_post^2) / 2)
-cd_bp_ibssr_base_wk8 <- (mean_bp_ibssr_wk8 - mean_bp_ibssr_base) / sqrt((sd_bp_ibssr_base^2 + sd_bp_ibssr_wk8^2) / 2)
-cd_bp_ibssr_post_wk8 <- (mean_bp_ibssr_wk8 - mean_bp_ibssr_post) / sqrt((sd_bp_ibssr_post^2 + sd_bp_ibssr_wk8^2) / 2)
+cd_bp_ibssr_base_post <- round((mean_bp_ibssr_post - mean_bp_ibssr_base) / sqrt((sd_bp_ibssr_base^2 + sd_bp_ibssr_post^2) / 2), 2)
+cd_bp_ibssr_base_wk8 <- round((mean_bp_ibssr_wk8 - mean_bp_ibssr_base) / sqrt((sd_bp_ibssr_base^2 + sd_bp_ibssr_wk8^2) / 2), 2)
+cd_bp_ibssr_post_wk8 <- round((mean_bp_ibssr_wk8 - mean_bp_ibssr_post) / sqrt((sd_bp_ibssr_post^2 + sd_bp_ibssr_wk8^2) / 2), 2)
 ```
 
-Furthermore, thin ideal internalization was assessed using the Sociocultural Attitudes Towards Appearance Questionnaire (SATAQ) [@schaeferDevelopmentValidationSociocultural2015] and the Ideal Body Stereotype Scale - Revised (IBSS-R) [@sticeTestDualPathway1996].
-
-Within the BAM group, the effect sizes for SATAQ were as follows:
-
--   The effect size between baseline and post-session was `r cd_fp_sataq_base_post`, indicating \[interpretation of effect size\].
-
--   The effect size between baseline and 8 weeks was `r cd_fp_sataq_base_wk8`, indicating \[interpretation of effect size\].
-
--   The effect size between post-session and 8 weeks was `r cd_fp_sataq_post_wk8`, indicating \[interpretation of effect size\].
-
-Within the Body Project group, the effect sizes for SATAQ were as follows:
-
--   The effect size between baseline and post-session was `r cd_bp_sataq_base_post`, indicating \[interpretation of effect size\].
-
--   The effect size between baseline and 8 weeks was `r cd_bp_sataq_base_wk8`, indicating \[interpretation of effect size\].
-
--   The effect size between post-session and 8 weeks was `r cd_bp_sataq_post_wk8`, indicating \[interpretation of effect size\].
-
-Furthermore, the effect sizes for the IBSS-R for the BAM group were:
-
--   The effect size between baseline and post-session was `r cd_fp_ibssr_base_post`, indicating \[interpretation of effect size\].
-
--   The effect size between baseline and 8 weeks was `r cd_fp_ibssr_base_wk8`, indicating \[interpretation of effect size\].
-
--   The effect size between post-session and 8 weeks was `r cd_fp_ibssr_post_wk8`, indicating \[interpretation of effect size\].
-
-Within the Body Project group, the effect sizes for IBSS-R were as follows:
-
--   The effect size between baseline and post-session was `r cd_bp_ibssr_base_post`, indicating \[interpretation of effect size\].
-
--   The effect size between baseline and 8 weeks was `r cd_bp_ibssr_base_wk8`, indicating \[interpretation of effect size\].
-
--   The effect size between post-session and 8 weeks was `r cd_bp_ibssr_post_wk8`, indicating \[interpretation of effect size\].
+<table>
+<thead>
+<tr class="header">
+<th><p>Measure</p></th>
+<th><p>Variable</p></th>
+<th><p>Group</p></th>
+<th><p>Base Mean (SD)</p></th>
+<th><p>Post Mean (SD)</p></th>
+<th><p>8wk Mean (SD)</p></th>
+<th><p>Base to Post</p></th>
+<th><p>Base to 8wk</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><p>GFFS</p></td>
+<td><p>gffs_sum_25</p></td>
+<td><p>BAM</p></td>
+<td><p><code>r mean_fp_gffs_base</code></p>
+<p>(<code>r sd_fp_gffs_base</code>)</p></td>
+<td><p><code>r mean_fp_gffs_post</code></p>
+<p>(<code>r sd_fp_gffs_post</code>)</p></td>
+<td><p><code>r mean_fp_gffs_wk8</code></p>
+<p>(<code>r sd_fp_gffs_wk8</code>)</p></td>
+<td><p><code>r cd_fp_gffs_base_post</code></p></td>
+<td><p><code>r cd_fp_gffs_base_wk8</code></p></td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td><p>Body Project</p></td>
+<td><p><code>r mean_bp_gffs_base</code></p>
+<p>(<code>r sd_bp_gffs_base</code>)</p></td>
+<td><p><code>r mean_bp_gffs_post</code></p>
+<p>(<code>r sd_bp_gffs_post</code>)</p></td>
+<td><p><code>r mean_bp_gffs_wk8</code></p>
+<p>(<code>r sd_bp_gffs_wk8</code>)</p></td>
+<td><p><code>r cd_bp_gffs_base_post</code></p></td>
+<td><p><code>r cd_bp_gffs_base_wk8</code></p></td>
+</tr>
+<tr class="odd">
+<td><p>UMB-FAT</p></td>
+<td><p>umb_total_sum_25</p></td>
+<td><p>BAM</p></td>
+<td><p><code>r mean_fp_umbfat_base</code></p>
+<p>(<code>r sd_fp_umbfat_base</code>)</p></td>
+<td><p><code>r mean_fp_umbfat_post</code></p>
+<p>(<code>r sd_fp_umbfat_post</code>)</p></td>
+<td><p><code>r mean_fp_umbfat_wk8</code></p>
+<p>(<code>r sd_fp_umbfat_wk8</code>)</p></td>
+<td><p><code>r cd_fp_umbfat_base_post</code></p></td>
+<td><p><code>r cd_fp_umbfat_base_wk8</code></p></td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td><p>Body Project</p></td>
+<td><p><code>r mean_bp_umbfat_base</code></p>
+<p>(<code>r sd_bp_umbfat_base</code>)</p></td>
+<td><p><code>r mean_bp_umbfat_post</code></p>
+<p>(<code>r sd_bp_umbfat_post</code>)</p></td>
+<td><p><code>r mean_bp_umbfat_wk8</code></p>
+<p>(<code>r sd_bp_umbfat_wk8</code>)</p></td>
+<td><p><code>r cd_bp_umbfat_base_post</code></p></td>
+<td><p><code>r cd_bp_umbfat_base_wk8</code></p></td>
+</tr>
+<tr class="odd">
+<td><p>EPSI Negative Attitudes Toward Obesity subscale</p></td>
+<td><p>epsi_neg_obese_25</p></td>
+<td><p>BAM</p></td>
+<td><p><code>r mean_fp_epsi_base</code></p>
+<p>(<code>r sd_fp_epsi_base</code>)</p></td>
+<td><p><code>r mean_fp_epsi_post</code></p>
+<p>(<code>r sd_fp_epsi_post</code>)</p></td>
+<td><p><code>r mean_fp_epsi_wk8</code></p>
+<p>(<code>r sd_fp_epsi_wk8</code>)</p></td>
+<td><p><code>r cd_fp_epsi_base_post</code></p></td>
+<td><p><code>r cd_fp_epsi_base_wk8</code></p></td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td><p>Body Project</p></td>
+<td><p><code>r mean_bp_epsi_base</code></p>
+<p>(<code>r sd_bp_epsi_base</code>)</p></td>
+<td><p><code>r mean_bp_epsi_post</code></p>
+<p>(<code>r sd_bp_epsi_post</code>)</p></td>
+<td><p><code>r mean_bp_epsi_wk8</code></p>
+<p>(<code>r sd_bp_epsi_wk8</code>)</p></td>
+<td><p><code>r cd_bp_epsi_base_post</code></p></td>
+<td><p><code>r cd_bp_epsi_base_wk8</code></p></td>
+</tr>
+<tr class="odd">
+<td><p>SATAQ</p></td>
+<td><p>sataq_average_25</p></td>
+<td><p>BAM</p></td>
+<td><p><code>r mean_fp_sataq_base</code></p>
+<p>(<code>r sd_fp_sataq_base</code>)</p></td>
+<td><p><code>r mean_fp_sataq_post</code></p>
+<p>(<code>r sd_fp_sataq_post</code>)</p></td>
+<td><p><code>r mean_fp_sataq_wk8</code></p>
+<p>(<code>r sd_fp_sataq_wk8</code>)</p></td>
+<td><p><code>r cd_fp_sataq_base_post</code></p></td>
+<td><p><code>r cd_fp_sataq_base_wk8</code></p></td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td><p>Body Project</p></td>
+<td><p><code>r mean_bp_sataq_base</code></p>
+<p>(<code>r sd_bp_sataq_base</code>)</p></td>
+<td><p><code>r mean_bp_sataq_post</code></p>
+<p>(<code>r sd_bp_sataq_post</code>)</p></td>
+<td><p><code>r mean_bp_sataq_wk8</code></p>
+<p>(<code>r sd_bp_sataq_wk8</code>)</p></td>
+<td><p><code>r cd_bp_sataq_base_post</code></p></td>
+<td><p><code>r cd_bp_sataq_base_wk8</code></p></td>
+</tr>
+<tr class="odd">
+<td><p>IBSS-R</p></td>
+<td><p>ibssr_mean_25</p></td>
+<td><p>BAM</p></td>
+<td><p><code>r mean_fp_ibssr_base</code></p>
+<p>(<code>r sd_fp_ibssr_base</code>)</p></td>
+<td><p><code>r mean_fp_ibssr_post</code></p>
+<p>(<code>r sd_fp_ibssr_post</code>)</p></td>
+<td><p><code>r mean_fp_ibssr_wk8</code></p>
+<p>(<code>r sd_fp_ibssr_wk8</code>)</p></td>
+<td><p><code>r cd_fp_ibssr_base_post</code></p></td>
+<td><p><code>r cd_fp_ibssr_base_wk8</code></p></td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td><p>Body Project</p></td>
+<td><p><code>r mean_bp_ibssr_base</code></p>
+<p>(<code>r sd_bp_ibssr_base</code>)</p></td>
+<td><p><code>r mean_bp_ibssr_post</code></p>
+<p>(<code>r sd_bp_ibssr_post</code>)</p></td>
+<td><p><code>r mean_bp_ibssr_wk8</code></p>
+<p>(<code>r sd_bp_ibssr_wk8</code>)</p></td>
+<td><p><code>r cd_bp_ibssr_base_post</code></p></td>
+<td><p><code>r cd_bp_ibssr_base_wk8</code></p></td>
+</tr>
+</tbody>
+</table>

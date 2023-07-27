@@ -13,12 +13,12 @@ library(ggplot2)
 library(reshape2)
 library(patchwork)
 library(cgwtools)
-load("Data/BAM_redcap_long_merged.2023_07_14.RData")
+load("Data/BAM_redcap_long_merged.2023-07-26.RData")
 completers <- unique(with(BAM_redcap_long_merged, id[ave(timepoint, id, FUN = function(x) length(unique(x))) == 3]))
-target_vars <- c('gffs_sum_25', 'umb_total_sum_complete', 'epsi_neg_obese_25', 'sataq_average', 'ibss_mean_25')
+target_vars <- c('gffs_sum_25', 'umb_total_sum_25', 'epsi_neg_obese_25', 'sataq_average_25', 'ibssr_mean_25')
 ```
 
-```{r}
+```{r message=FALSE, echo=FALSE, warning=FALSE}
 
 mean_list <- list()
 
@@ -39,7 +39,7 @@ save(mean_df, file = 'tabs/results_tables.RData')
 
 ```
 
-```{r}
+```{r message=FALSE, echo=FALSE, warning=FALSE}
 
 # Assuming you have the dataset BAM_redcap_long_merged and target_vars defined as before
 
@@ -117,11 +117,11 @@ resave(effect_sizes_df, file = 'tabs/results_tables.RData')
 
 ```
 
-```{r}
+```{r message=FALSE, echo=FALSE, warning=FALSE}
 rm(list = ls()[!ls() %in% c("BAM_redcap_long_merged", "mean_df", "effect_sizes_df", 'completers', 'target_vars')])
 ```
 
-```{r}
+```{r message=FALSE, echo=FALSE, warning=FALSE}
 
 
 
@@ -170,4 +170,61 @@ combined_plots
 ggsave(plot = combined_plots, file = 'figs/targets.png')
 ```
 
-\`\`\`
+```{r message=FALSE, echo=FALSE, warning=FALSE}
+library(knitr)
+load("tabs/results_tables.RData")
+knitr::kable(effect_sizes_df, format = "html", caption = "Effect Sizes Table")
+knitr::kable(mean_df, format = "html", caption = "Mean Table")
+```
+
+```{r message=FALSE, echo=FALSE, warning=FALSE}
+###cleaning the table###
+effect_sizes_df$group <- ifelse(effect_sizes_df$group == "BP", "Body Project", 
+                                ifelse(effect_sizes_df$group == "FP", "BAM", effect_sizes_df$group))
+
+effect_sizes_df$Cohens_d_baseline_post <- round(effect_sizes_df$Cohens_d_baseline_post, 2)
+
+effect_sizes_df$Cohens_d_baseline_8_week <- round(effect_sizes_df$Cohens_d_baseline_8_week, 2)
+
+mean_df$group <- ifelse(mean_df$group == "BP", "Body Project", 
+                                ifelse(mean_df$group == "FP", "BAM", mean_df$group))
+
+mean_df_table <- full_join(effect_sizes_df, mean_df)
+
+library(tidyr)
+wide_mean_df_table <- pivot_wider(mean_df_table, names_from = timepoint, values_from = Mean)
+
+library(dplyr)
+wide_mean_df_table <- wide_mean_df_table %>%
+  rename(`Mean 8wk` = `8wk`) %>%
+  mutate(`Mean 8wk` = round(`Mean 8wk`, 2))
+wide_mean_df_table <- wide_mean_df_table %>%
+  rename(`Mean baseline` = baseline, `Mean post` = post) %>%
+  mutate(
+    `Mean baseline` = round(`Mean baseline`, 2),
+    `Mean post` = round(`Mean post`, 2)
+  )  
+  
+wide_mean_df_table <- wide_mean_df_table %>%
+  select(Variable, group, `Mean baseline`, `Mean post`, `Mean 8wk`, Cohens_d_baseline_post, Cohens_d_baseline_8_week)
+  
+final_results_table <- wide_mean_df_table %>%
+  rename(`Baseline to Post (Cohen's d)` = Cohens_d_baseline_post, 
+         `Baseline to 8wk (Cohen's d)` = Cohens_d_baseline_8_week)
+
+final_results_table <- final_results_table %>%
+  mutate(Measure = case_when(
+    Variable == "gffs_sum_25" ~ "GFFS",
+    Variable == "umb_total_sum_25" ~ "UMB-FAT",
+    Variable == "epsi_neg_obese_25" ~ "EPSI Subscale",
+    Variable == "sataq_average_25" ~ "SATAQ",
+    Variable == "ibssr_mean_25" ~ "IBSS-R",
+    TRUE ~ as.character(Variable)
+  ))
+
+final_results_table <- final_results_table %>%
+  select(Measure, Variable, group, `Mean baseline`, `Mean post`, `Mean 8wk`, `Baseline to Post (Cohen's d)`,`Baseline to 8wk (Cohen's d)`)
+print(final_results_table)
+```
+
+ 
