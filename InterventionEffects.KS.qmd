@@ -227,4 +227,4 @@ final_results_table <- final_results_table %>%
 print(final_results_table)
 ```
 
- 
+Effect sizes were calculated for each group to assess any reductions in fatphobia, anti-fat bias, and thin ideal internalization between baseline and post session and between baseline and 8-week post session. Effect sizes, means, and standard errors can found in Table XX.
