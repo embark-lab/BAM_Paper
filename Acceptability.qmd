@@ -54,4 +54,60 @@ race_anova <- aov(dcf_race ~ dcf_group, data = dem_data)
 
 Analyses using a one-way analysis of variance (ANOVA) showed the two groups did not significantly vary based on gender, race, or sexuality. Attrition rate for the BAM intervention was 5% with only 2 participants dropping from the study between the first and second sessions, thus confirming our hypothesis of the BAM intervention attrition being less than 20%. Zero participants dropped out of the Body Project group between intervention sessions. Fifty participants (BAM: N = 26; Body Project: N = 24) completed study activities at all three time points and attended both intervention sessions.
 
-Some participants were also asked to complete a feedback survey about their experience with the BAM intervention at both the post session and 8-week post session time points.
+Some participants were also asked to complete a feedback survey about their experience with the BAM intervention at both the post session and 8-week post session time points. The items in the survey were presented on a scale from 1 (Strongly Disagree) to 5 (Strongly Agree). Analysis of these items indicated generally positive feelings towards the intervention at both time points. The mean scores of enjoyment were 4.60 (*SD* = .51) at post-session and 4.50 (*SD* = .65) at 8-week post sessions. All other questions had mean scores above 4.20. The survey also included open-ended questions which indicated generally positive responses as well. Open-ended questions were analyzed by finding reoccurring themes within the participants' answers. At post-session, 33.3% of participants indicated that they liked the role-playing activity the most about the intervention. About 26.7% of participants reported that there was nothing that they least liked about the program and another 26.7% stated that they did not enjoy sharing their take-home activities. When asked about any inclusions to the intervention, 40% of the participants reported that they would not add anything. At the 8-week post session time point, 14.3% of participants reported disappointment in lack of other participants, noting that the group was too small.
+
+```{r message=FALSE, echo=FALSE, warning=FALSE}
+install.packages(dplyr)
+library(dplyr)
+Define a function to calculate summary statistics
+calculate_summary <- function(dat,variable, event) {
+  result <- dat %>%
+    filter(redcap_event_name == event) %>%
+    filter(grepl('BAM', record_id)) %>%
+    pull({{ variable }})
+  
+  cat("Summary for", event, ":\n")
+  cat("Min:", min(result), "\n")
+  cat("Max:", max(result), "\n")
+  cat("Mean:", mean(result), "\n")
+  cat("SD:", sd(result), "\n\n")
+}
+
+# Call the function for the 'enjoy' variable and events
+calculate_summary(dat, fbp_enjoy, "postsession_arm_1")
+calculate_summary(dat, fbp_enjoy, "8_week_postsession_arm_1")
+
+# Call the function for the 'comfort' variable and events
+calculate_summary(dat, fbp_comf, "postsession_arm_1")
+calculate_summary(dat, fbp_comf, "8_week_postsession_arm_1")
+
+#facilitators 
+calculate_summary(dat,fbp_facilitators,"postsession_arm_1")
+calculate_summary(dat,fbp_facilitators,"8_week_postsession_arm_1")
+
+#relevant 
+calculate_summary(dat,fbp_relevant,"postsession_arm_1")
+calculate_summary(dat,fbp_relevant,"8_week_postsession_arm_1")
+
+#Personal 
+calculate_summary(dat,fbp_personal,"postsession_arm_1")
+calculate_summary(dat,fbp_personal,"8_week_postsession_arm_1")
+
+#Body
+calculate_summary(dat,fbp_body,"postsession_arm_1")
+calculate_summary(dat,fbp_body,"8_week_postsession_arm_1")
+
+#Learn
+calculate_summary(dat,fbp_learn,"postsession_arm_1")
+calculate_summary(dat,fbp_learn,"8_week_postsession_arm_1")
+
+#Gooduse
+calculate_summary(dat,fbp_gooduse,"postsession_arm_1")
+calculate_summary(dat,fbp_gooduse,"8_week_postsession_arm_1")
+
+#recommend 
+calculate_summary(dat,fbp_recommend,"postsession_arm_1")
+calculate_summary(dat,fbp_recommend,"8_week_postsession_arm_1")
+
+
+```

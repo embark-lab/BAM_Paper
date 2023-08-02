@@ -20,13 +20,34 @@ target_vars <- c('gffs_sum_25', 'umb_total_sum_25', 'epsi_neg_obese_25', 'sataq_
 
 ```{r message=FALSE, echo=FALSE, warning=FALSE}
 
+sd_list <- list()
+
+for (i in target_vars) { 
+  sd_df <- BAM_redcap_long_merged %>%
+    filter(!is.na(timepoint), id %in% completers) %>%
+    group_by(timepoint, group) %>%
+    summarise(SD = sd(!!sym(i), na.rm = TRUE), Variable = i)  # Use !!sym(i) to refer to the variable name dynamically
+    
+  sd_list[[i]] <- sd_df
+}
+  
+# Create a data frame with the results
+sd_df <- do.call(rbind, sd_list)
+
+save(sd_df, file = 'tabs/results_tables.RData')
+
+sd_df$SD <- round(sd_df$SD, 2)
+
+```
+
+```{r}
 mean_list <- list()
 
 for (i in target_vars) { 
   mean_df <- BAM_redcap_long_merged %>%
     filter(!is.na(timepoint), id %in% completers) %>%
     group_by(timepoint, group) %>%
-    summarise(Mean = mean(!!sym(i), na.rm = TRUE), Variable = i)  # Use !!sym(i) to refer to the variable name dynamically
+    summarise(mean = mean(!!sym(i), na.rm = TRUE), Variable = i)  # Use !!sym(i) to refer to the variable name dynamically
     
   mean_list[[i]] <- mean_df
 }
@@ -37,6 +58,7 @@ mean_df <- do.call(rbind, mean_list)
 save(mean_df, file = 'tabs/results_tables.RData')
 
 
+mean_df$mean <- round(mean_df$mean, 2)
 ```
 
 ```{r message=FALSE, echo=FALSE, warning=FALSE}
@@ -123,8 +145,6 @@ rm(list = ls()[!ls() %in% c("BAM_redcap_long_merged", "mean_df", "effect_sizes_d
 
 ```{r message=FALSE, echo=FALSE, warning=FALSE}
 
-
-
 # Function to calculate standard error
 standard_error <- function(x) {
   return(sd(x, na.rm = TRUE) / sqrt(length(x)))
@@ -179,43 +199,45 @@ knitr::kable(mean_df, format = "html", caption = "Mean Table")
 
 ```{r message=FALSE, echo=FALSE, warning=FALSE}
 ###cleaning the table###
-effect_sizes_df$group <- ifelse(effect_sizes_df$group == "BP", "Body Project", 
-                                ifelse(effect_sizes_df$group == "FP", "BAM", effect_sizes_df$group))
-
-effect_sizes_df$Cohens_d_baseline_post <- round(effect_sizes_df$Cohens_d_baseline_post, 2)
-
-effect_sizes_df$Cohens_d_baseline_8_week <- round(effect_sizes_df$Cohens_d_baseline_8_week, 2)
-
-mean_df$group <- ifelse(mean_df$group == "BP", "Body Project", 
-                                ifelse(mean_df$group == "FP", "BAM", mean_df$group))
 
 mean_df_table <- full_join(effect_sizes_df, mean_df)
+mean_sd_cd_table <- full_join(mean_df_table, sd_df)
+
+mean_sd_cd_table$mean <- paste(mean_sd_cd_table$mean, " (", mean_sd_cd_table$SD, ")", sep = "")
 
 library(tidyr)
-wide_mean_df_table <- pivot_wider(mean_df_table, names_from = timepoint, values_from = Mean)
+mean_sd_cd_table <- mean_sd_cd_table %>%select(-SD)
+
+wide_mean_sd_cd_table <- pivot_wider(mean_sd_cd_table, 
+                                     names_from = timepoint, 
+                                     values_from = mean,
+                                     names_prefix = "mean_")
+
+wide_mean_sd_cd_table$group <- ifelse(wide_mean_sd_cd_table$group == "BP", "Body Project", 
+                                ifelse(wide_mean_sd_cd_table$group == "FP", "BAM", wide_mean_sd_cd_table$group))
+
+wide_mean_sd_cd_table$Cohens_d_baseline_post <- round(wide_mean_sd_cd_table$Cohens_d_baseline_post, 2)
+
+wide_mean_sd_cd_table$Cohens_d_baseline_8_week <- round(wide_mean_sd_cd_table$Cohens_d_baseline_8_week, 2)
 
 library(dplyr)
-wide_mean_df_table <- wide_mean_df_table %>%
-  rename(`Mean 8wk` = `8wk`) %>%
-  mutate(`Mean 8wk` = round(`Mean 8wk`, 2))
-wide_mean_df_table <- wide_mean_df_table %>%
-  rename(`Mean baseline` = baseline, `Mean post` = post) %>%
-  mutate(
-    `Mean baseline` = round(`Mean baseline`, 2),
-    `Mean post` = round(`Mean post`, 2)
-  )  
+
+wide_mean_sd_cd_table <- wide_mean_sd_cd_table %>%
+  rename(`Mean 8wk` = mean_8wk)
+wide_mean_sd_cd_table <- wide_mean_sd_cd_table %>%
+  rename(`Mean baseline` = mean_baseline, `Mean post` = mean_post)
   
-wide_mean_df_table <- wide_mean_df_table %>%
+wide_mean_sd_cd_table <- wide_mean_sd_cd_table %>%
   select(Variable, group, `Mean baseline`, `Mean post`, `Mean 8wk`, Cohens_d_baseline_post, Cohens_d_baseline_8_week)
   
-final_results_table <- wide_mean_df_table %>%
+final_results_table <- wide_mean_sd_cd_table %>%
   rename(`Baseline to Post (Cohen's d)` = Cohens_d_baseline_post, 
          `Baseline to 8wk (Cohen's d)` = Cohens_d_baseline_8_week)
 
 final_results_table <- final_results_table %>%
   mutate(Measure = case_when(
     Variable == "gffs_sum_25" ~ "GFFS",
-    Variable == "umb_total_sum_25" ~ "UMB-FAT",
+    Variable == "umb_total_sum_25" ~ "UMB-Fat",
     Variable == "epsi_neg_obese_25" ~ "EPSI Subscale",
     Variable == "sataq_average_25" ~ "SATAQ",
     Variable == "ibssr_mean_25" ~ "IBSS-R",
@@ -224,7 +246,18 @@ final_results_table <- final_results_table %>%
 
 final_results_table <- final_results_table %>%
   select(Measure, Variable, group, `Mean baseline`, `Mean post`, `Mean 8wk`, `Baseline to Post (Cohen's d)`,`Baseline to 8wk (Cohen's d)`)
+
+final_results_table <- final_results_table %>%
+  rename(Construct = Variable) %>%
+  mutate(Construct = case_when(
+    Construct == "gffs_sum_25" ~ "Fatphobia",
+    Construct == "umb_total_sum_25" ~ "Anti-fat bias",
+    Construct == "epsi_neg_obese_25" ~ "Negative attitudes toward obesity",
+    Construct %in% c("sataq_average_25", "ibssr_mean_25") ~ "Thin ideal internalization",
+    TRUE ~ Construct
+  ))
 print(final_results_table)
+knitr::kable(final_results_table, format = "html", caption = "Intervention Effects")
 ```
 
 Effect sizes were calculated for both BAM and Body Project to assess if reductions in fatphobia, anti-fat bias, and thin ideal internalization differed between interventions across time points. To see effect sizes, means, and standard deviations for each group, see table XX.
