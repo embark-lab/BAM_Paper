@@ -1,5 +1,6 @@
 project:
   type: book
+  output-dir: docs
 
 book:
   title: "BAM Manuscript"
@@ -9,8 +10,6 @@ book:
     - index.qmd
     - Sample_Description.qmd
     - Feasibility.qmd
-    - Acceptability.qmd
-    - Intervention_Effects.qmd
     - InterventionEffects.KS.qmd
     - tabs/results_tables.RData
     - references.qmd

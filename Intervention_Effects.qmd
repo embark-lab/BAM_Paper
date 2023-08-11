@@ -13,7 +13,7 @@ library(dplyr)
 
 ```{r message=FALSE, echo=FALSE, warning=FALSE}
 ### N for participants at each timepoint###
-load("Data/BAM_redcap_long_merged.2023-07-26.RData")
+load("Data/BAM_redcap_long_merged.2023-08-11.RData")
 fp_base_dataset <- subset(BAM_redcap_long_merged, group == 'FP' & timepoint == 'baseline')
 bp_base_dataset <- subset(BAM_redcap_long_merged, group == 'BP' & timepoint == 'baseline')
 
@@ -22,6 +22,8 @@ bp_post_dataset <- subset(BAM_redcap_long_merged, group == 'BP' & timepoint == '
 
 fp_8wk_dataset <- subset(BAM_redcap_long_merged, group == 'FP' & timepoint == '8wk')
 bp_8wk_dataset <- subset(BAM_redcap_long_merged, group == 'BP' & timepoint == '8wk')
+
+total_baseline_data <- subset(BAM_redcap_long_merged,timepoint == 'baseline')
 
 ###Selecting only pps that have completed all 3 timepoints###
 
@@ -183,149 +185,51 @@ cd_bp_ibssr_base_wk8 <- round((mean_bp_ibssr_wk8 - mean_bp_ibssr_base) / sqrt((s
 cd_bp_ibssr_post_wk8 <- round((mean_bp_ibssr_wk8 - mean_bp_ibssr_post) / sqrt((sd_bp_ibssr_post^2 + sd_bp_ibssr_wk8^2) / 2), 2)
 ```
 
-<table>
-<thead>
-<tr class="header">
-<th><p>Measure</p></th>
-<th><p>Variable</p></th>
-<th><p>Group</p></th>
-<th><p>Base Mean (SD)</p></th>
-<th><p>Post Mean (SD)</p></th>
-<th><p>8wk Mean (SD)</p></th>
-<th><p>Base to Post</p></th>
-<th><p>Base to 8wk</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><p>GFFS</p></td>
-<td><p>gffs_sum_25</p></td>
-<td><p>BAM</p></td>
-<td><p><code>r mean_fp_gffs_base</code></p>
-<p>(<code>r sd_fp_gffs_base</code>)</p></td>
-<td><p><code>r mean_fp_gffs_post</code></p>
-<p>(<code>r sd_fp_gffs_post</code>)</p></td>
-<td><p><code>r mean_fp_gffs_wk8</code></p>
-<p>(<code>r sd_fp_gffs_wk8</code>)</p></td>
-<td><p><code>r cd_fp_gffs_base_post</code></p></td>
-<td><p><code>r cd_fp_gffs_base_wk8</code></p></td>
-</tr>
-<tr class="even">
-<td></td>
-<td></td>
-<td><p>Body Project</p></td>
-<td><p><code>r mean_bp_gffs_base</code></p>
-<p>(<code>r sd_bp_gffs_base</code>)</p></td>
-<td><p><code>r mean_bp_gffs_post</code></p>
-<p>(<code>r sd_bp_gffs_post</code>)</p></td>
-<td><p><code>r mean_bp_gffs_wk8</code></p>
-<p>(<code>r sd_bp_gffs_wk8</code>)</p></td>
-<td><p><code>r cd_bp_gffs_base_post</code></p></td>
-<td><p><code>r cd_bp_gffs_base_wk8</code></p></td>
-</tr>
-<tr class="odd">
-<td><p>UMB-FAT</p></td>
-<td><p>umb_total_sum_25</p></td>
-<td><p>BAM</p></td>
-<td><p><code>r mean_fp_umbfat_base</code></p>
-<p>(<code>r sd_fp_umbfat_base</code>)</p></td>
-<td><p><code>r mean_fp_umbfat_post</code></p>
-<p>(<code>r sd_fp_umbfat_post</code>)</p></td>
-<td><p><code>r mean_fp_umbfat_wk8</code></p>
-<p>(<code>r sd_fp_umbfat_wk8</code>)</p></td>
-<td><p><code>r cd_fp_umbfat_base_post</code></p></td>
-<td><p><code>r cd_fp_umbfat_base_wk8</code></p></td>
-</tr>
-<tr class="even">
-<td></td>
-<td></td>
-<td><p>Body Project</p></td>
-<td><p><code>r mean_bp_umbfat_base</code></p>
-<p>(<code>r sd_bp_umbfat_base</code>)</p></td>
-<td><p><code>r mean_bp_umbfat_post</code></p>
-<p>(<code>r sd_bp_umbfat_post</code>)</p></td>
-<td><p><code>r mean_bp_umbfat_wk8</code></p>
-<p>(<code>r sd_bp_umbfat_wk8</code>)</p></td>
-<td><p><code>r cd_bp_umbfat_base_post</code></p></td>
-<td><p><code>r cd_bp_umbfat_base_wk8</code></p></td>
-</tr>
-<tr class="odd">
-<td><p>EPSI Negative Attitudes Toward Obesity subscale</p></td>
-<td><p>epsi_neg_obese_25</p></td>
-<td><p>BAM</p></td>
-<td><p><code>r mean_fp_epsi_base</code></p>
-<p>(<code>r sd_fp_epsi_base</code>)</p></td>
-<td><p><code>r mean_fp_epsi_post</code></p>
-<p>(<code>r sd_fp_epsi_post</code>)</p></td>
-<td><p><code>r mean_fp_epsi_wk8</code></p>
-<p>(<code>r sd_fp_epsi_wk8</code>)</p></td>
-<td><p><code>r cd_fp_epsi_base_post</code></p></td>
-<td><p><code>r cd_fp_epsi_base_wk8</code></p></td>
-</tr>
-<tr class="even">
-<td></td>
-<td></td>
-<td><p>Body Project</p></td>
-<td><p><code>r mean_bp_epsi_base</code></p>
-<p>(<code>r sd_bp_epsi_base</code>)</p></td>
-<td><p><code>r mean_bp_epsi_post</code></p>
-<p>(<code>r sd_bp_epsi_post</code>)</p></td>
-<td><p><code>r mean_bp_epsi_wk8</code></p>
-<p>(<code>r sd_bp_epsi_wk8</code>)</p></td>
-<td><p><code>r cd_bp_epsi_base_post</code></p></td>
-<td><p><code>r cd_bp_epsi_base_wk8</code></p></td>
-</tr>
-<tr class="odd">
-<td><p>SATAQ</p></td>
-<td><p>sataq_average_25</p></td>
-<td><p>BAM</p></td>
-<td><p><code>r mean_fp_sataq_base</code></p>
-<p>(<code>r sd_fp_sataq_base</code>)</p></td>
-<td><p><code>r mean_fp_sataq_post</code></p>
-<p>(<code>r sd_fp_sataq_post</code>)</p></td>
-<td><p><code>r mean_fp_sataq_wk8</code></p>
-<p>(<code>r sd_fp_sataq_wk8</code>)</p></td>
-<td><p><code>r cd_fp_sataq_base_post</code></p></td>
-<td><p><code>r cd_fp_sataq_base_wk8</code></p></td>
-</tr>
-<tr class="even">
-<td></td>
-<td></td>
-<td><p>Body Project</p></td>
-<td><p><code>r mean_bp_sataq_base</code></p>
-<p>(<code>r sd_bp_sataq_base</code>)</p></td>
-<td><p><code>r mean_bp_sataq_post</code></p>
-<p>(<code>r sd_bp_sataq_post</code>)</p></td>
-<td><p><code>r mean_bp_sataq_wk8</code></p>
-<p>(<code>r sd_bp_sataq_wk8</code>)</p></td>
-<td><p><code>r cd_bp_sataq_base_post</code></p></td>
-<td><p><code>r cd_bp_sataq_base_wk8</code></p></td>
-</tr>
-<tr class="odd">
-<td><p>IBSS-R</p></td>
-<td><p>ibssr_mean_25</p></td>
-<td><p>BAM</p></td>
-<td><p><code>r mean_fp_ibssr_base</code></p>
-<p>(<code>r sd_fp_ibssr_base</code>)</p></td>
-<td><p><code>r mean_fp_ibssr_post</code></p>
-<p>(<code>r sd_fp_ibssr_post</code>)</p></td>
-<td><p><code>r mean_fp_ibssr_wk8</code></p>
-<p>(<code>r sd_fp_ibssr_wk8</code>)</p></td>
-<td><p><code>r cd_fp_ibssr_base_post</code></p></td>
-<td><p><code>r cd_fp_ibssr_base_wk8</code></p></td>
-</tr>
-<tr class="even">
-<td></td>
-<td></td>
-<td><p>Body Project</p></td>
-<td><p><code>r mean_bp_ibssr_base</code></p>
-<p>(<code>r sd_bp_ibssr_base</code>)</p></td>
-<td><p><code>r mean_bp_ibssr_post</code></p>
-<p>(<code>r sd_bp_ibssr_post</code>)</p></td>
-<td><p><code>r mean_bp_ibssr_wk8</code></p>
-<p>(<code>r sd_bp_ibssr_wk8</code>)</p></td>
-<td><p><code>r cd_bp_ibssr_base_post</code></p></td>
-<td><p><code>r cd_bp_ibssr_base_wk8</code></p></td>
-</tr>
-</tbody>
-</table>
+Baseline Levels
+
+```{r}
+mean_base_gffs <- mean(total_baseline_data$gffs_sum_25, na.rm = TRUE)
+range_base_gffs <- range(total_baseline_data$gffs_sum_25, na.rm = TRUE)
+sd_base_gffs <- sd(total_baseline_data$gffs_sum_25, na.rm = TRUE)
+```
+
+```{r}
+mean_epsi_bd <- mean(total_baseline_data$epsi_body_dissatisfaction_25, na.rm = TRUE)
+range_base_epsi_bd <- range(total_baseline_data$epsi_body_dissatisfaction_25, na.rm = TRUE)
+sd_base_epsi_bd <- sd(total_baseline_data$epsi_body_dissatisfaction_25, na.rm = TRUE)
+```
+
+```{r}
+total_baseline_data <- subset(BAM_redcap_long_merged,timepoint == 'baseline')
+
+variables <- c("epsi_body_dissatisfaction_25","epsi_binge_25", "epsi_restraint_25", "epsi_purging_25",
+               "epsi_restrict_25", "epsi_exercise_25", "epsi_neg_obese_25",
+               "epsi_muscle_build_25")
+
+# Initialize empty lists to store results
+epsi_means <- vector("numeric", length(variables))
+epsi_ranges <- vector("list", length(variables))
+epsi_sds <- vector("numeric", length(variables))
+
+# Loop through each variable
+for (i in seq_along(variables)) {
+  variable <- variables[i]
+  
+  # Calculate mean
+  epsi_means[i] <- mean(total_baseline_data[[variable]], na.rm = TRUE)
+  
+  # Calculate range
+  epsi_ranges[i] <- range(total_baseline_data[[variable]], na.rm = TRUE)
+  
+  # Calculate standard deviation
+  epsi_sds[i] <- sd(total_baseline_data[[variable]], na.rm = TRUE)
+}
+
+# Create a data frame with the results
+epsi_sd_list <- list(epsi_sds)
+sd_epsi <- do.call(rbind, epsi_sds)
+
+save(sd_epsi, file = 'tabs/results_tables.RData')
+
+sd_epsi$SD <- round(sd_epsi$SD, 2)
+```

@@ -57,9 +57,9 @@ Analyses using a one-way analysis of variance (ANOVA) showed the two groups did 
 Some participants were also asked to complete a feedback survey about their experience with the BAM intervention at both the post session and 8-week post session time points. The items in the survey were presented on a scale from 1 (Strongly Disagree) to 5 (Strongly Agree). Analysis of these items indicated generally positive feelings towards the intervention at both time points. The mean scores of enjoyment were 4.60 (*SD* = .51) at post-session and 4.50 (*SD* = .65) at 8-week post sessions. All other questions had mean scores above 4.20. The survey also included open-ended questions which indicated generally positive responses as well. Open-ended questions were analyzed by finding reoccurring themes within the participants' answers. At post-session, 33.3% of participants indicated that they liked the role-playing activity the most about the intervention. About 26.7% of participants reported that there was nothing that they least liked about the program and another 26.7% stated that they did not enjoy sharing their take-home activities. When asked about any inclusions to the intervention, 40% of the participants reported that they would not add anything. At the 8-week post session time point, 14.3% of participants reported disappointment in lack of other participants, noting that the group was too small.
 
 ```{r message=FALSE, echo=FALSE, warning=FALSE}
-install.packages(dplyr)
 library(dplyr)
-Define a function to calculate summary statistics
+
+#Define a function to calculate summary statistics#
 calculate_summary <- function(dat,variable, event) {
   result <- dat %>%
     filter(redcap_event_name == event) %>%
