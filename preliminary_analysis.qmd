@@ -1,0 +1,101 @@
+---
+title: "Preliminary Analysis"
+editor: visual
+---
+```{r message=FALSE, echo=FALSE, warning=FALSE}
+#demographics prescheduled#
+
+library(readxl)
+library(scorekeeper)
+library(tidyverse)
+
+dem_pre_scoresheet <-
+read_excel("Demographics/Demographics_preschedule.xlsx")
+raw_pre_data <-
+read.csv("Demographics/demographics_pre_data.csv")
+
+dem_pre_data <-
+scorekeep(raw_pre_data, dem_pre_scoresheet)[[4]] 
+```
+
+```{r message=FALSE, echo=FALSE, warning=FALSE}
+##demographics postscheduled##
+
+raw_post_data <-
+  read_csv("Demographics/Demographics_post_data.csv")
+
+dem_post_scoresheet <-
+  read_excel("Demographics/Demographics_postschedule.xlsx")
+
+dem_post_data <-
+  scorekeep(raw_post_data, dem_post_scoresheet)[[5]]
+```
+
+```{r message=FALSE, echo=FALSE, warning=FALSE}
+#create age in years#
+dem_data <- full_join(dem_pre_data, dem_post_data)
+dem_data$dcf_age <- as.Date(dem_data$dcf_age, format = "%m/%d/%y")
+dem_data$dcf_date <- as.Date(dem_data$dcf_date, format = "%m/%d/%y")
+dem_data$age <- floor(as.numeric(difftime(dem_data$dcf_date, dem_data$dcf_age, units = "days")) / 365.25)
+```
+
+```{r message=FALSE, echo=FALSE, warning=FALSE}
+###Anovas to compare group demographics###
+
+dem_data$dcf_group <- factor(dem_data$dcf_group, levels = c(0, 1), labels = c("Body Project", "BAM"))
+
+sex_anova <- aov(dcf_research_sexual ~ dcf_group, data = dem_data)
+
+gender_anova <- aov(dcf_research_gender ~ dcf_group, data = dem_data)
+
+race_anova <- aov(dcf_race ~ dcf_group, data = dem_data)
+
+```
+
+```{r message=FALSE, echo=FALSE, warning=FALSE}
+### N for participants at each timepoint###
+load("Data/BAM_redcap_long_merged.2023-08-11.RData")
+fp_base_dataset <- subset(BAM_redcap_long_merged, group == 'FP' & timepoint == 'baseline')
+bp_base_dataset <- subset(BAM_redcap_long_merged, group == 'BP' & timepoint == 'baseline')
+
+fp_post_dataset <- subset(BAM_redcap_long_merged, group == 'FP' & timepoint == 'post')
+bp_post_dataset <- subset(BAM_redcap_long_merged, group == 'BP' & timepoint == 'post')
+
+fp_8wk_dataset <- subset(BAM_redcap_long_merged, group == 'FP' & timepoint == '8wk')
+bp_8wk_dataset <- subset(BAM_redcap_long_merged, group == 'BP' & timepoint == '8wk')
+
+total_baseline_data <- subset(BAM_redcap_long_merged,timepoint == 'baseline')
+total_baseline_data$gffs_sum_25 <- total_baseline_data$gffs_sum_25 + 7
+```
+
+```{r message=FALSE, echo=FALSE, warning=FALSE}
+# Specify the variables of interest
+variables_of_interest <- c('gffs_sum_25', 'epsi_body_dissatisfaction_25', 
+                            'epsi_binge_25', 'epsi_restraint_25', 
+                            'epsi_purging_25', 'epsi_restrict_25', 
+                            'epsi_exercise_25', 'epsi_neg_obese_25', 
+                            'epsi_muscle_build_25')
+
+# Reshape the data to long format
+long_data <- total_baseline_data %>%
+  pivot_longer(cols = all_of(variables_of_interest),
+               names_to = "variable",
+               values_to = "value")
+
+# Calculate means, standard deviations, and ranges for each variable
+baseline_stats <- long_data %>%
+  group_by(variable) %>%
+  summarise(mean = round(mean(value, na.rm = TRUE), 2),
+            sd = round(sd(value, na.rm = TRUE), 2),
+            range = round(range(value, na.rm = TRUE), 2))
+
+# Print the summary statistics
+print(baseline_stats)
+
+```
+```{r message=FALSE, echo=FALSE, warning=FALSE}
+gffs_sum = 
+gffs_clinical <- mean(total_baseline_data$gffs_sum_25 >= 30.1, na.rm = TRUE) * 100
+```
+
+Baseline levels of fatphobia and eating disorder pathology within the sample were assessed to compare to clinical and community norms. Przybyła-Basista et al., (2022) assessed both clinical and non-clinical samples using the GFFS. The clinical sample consisted of 135 females and generated a mean score of N = 30.1 (SD = 7.7) while the two non-clinical samples (sample one: N = 296; sample two: N = 287) both expressed less fatphobia (sample one: mean = 20.3 (SD = 6.8); sample two: mean = 19.6 (SD = 6.8)). The current study's sample is representative of a community sample by generating a mean baseline score of `r baseline_stats[17,2]`(SD = `r baseline_stats[17,3]`, R = `r baseline_stats[17,3]`- `r baseline_stats[18,3]`). 

@@ -21,7 +21,7 @@ scorekeep(raw_pre_data, dem_pre_scoresheet)[[4]]
 ```
 
 ```{r message=FALSE, echo=FALSE, warning=FALSE}
-##demographics postscheduled##
+#demographics postscheduled#
 
 raw_post_data <-
   read_csv("Demographics/Demographics_post_data.csv")
@@ -35,6 +35,7 @@ dem_post_data <-
 ```
 
 ```{r message=FALSE, echo=FALSE, warning=FALSE}
+#create age in years#
 dem_data <- full_join(dem_pre_data, dem_post_data)
 dem_data$dcf_age <- as.Date(dem_data$dcf_age, format = "%m/%d/%y")
 dem_data$dcf_date <- as.Date(dem_data$dcf_date, format = "%m/%d/%y")
@@ -42,6 +43,7 @@ dem_data$age <- floor(as.numeric(difftime(dem_data$dcf_date, dem_data$dcf_age, u
 ```
 
 ```{r message=FALSE, echo=FALSE, warning=FALSE}
+#BAM demographics#
 bam_data <- subset(dem_data, dcf_group == 1)
 
 bam_white <- round((mean(bam_data$dcf_race == 1, na.rm = TRUE) * 100), 2)
@@ -78,6 +80,7 @@ bam_student <- round((mean(bam_data$dcf_student == 1, na.rm = TRUE) * 100), 2)
 ```
 
 ```{r message=FALSE, echo=FALSE, warning=FALSE}
+#BP demographics#
 bp_data <- subset(dem_data, dcf_group == 0)
 bp_white <- round((mean(bp_data$dcf_race == 1, na.rm = TRUE) * 100), 2)
 bp_white_n <- sum(bp_data$dcf_race == 1, na.rm = TRUE)
@@ -112,6 +115,7 @@ bp_student <- round((mean(bp_data$dcf_student == 1, na.rm = TRUE) * 100), 2)
 ```
 
 ```{r message=FALSE, echo=FALSE, warning=FALSE}
+#total demographics#
 total_women_n <- bam_women_n + bp_women_n
 total_women <- bam_women + bp_women
 total_men_n <- bam_men_n + bp_men_n
@@ -131,6 +135,7 @@ total_asex_n <- bam_asex_n + bp_asex_n
 ```
 
 ```{r message=FALSE, echo=FALSE, warning=FALSE}
+#percentages#
 bp_age_excluded <- bp_data$age[-8]
 age_excluded <- dem_data$age[-15]
 mean_bp_age <- round(mean(bp_age_excluded, na.rm = TRUE), 2)
@@ -163,7 +168,7 @@ sum_student <- sum(dem_data$dcf_student, na.rm = TRUE)
 Participants (N = 66) were randomly assigned to either the BAM (N=37) or the Body Project (N=29) intervention. Of these, 29 attended the interventions virtually (BAM: N=14, BP: N= 15) beginning 10/20 and ending 02/22 due to the pandemic and 37 attended in-person sessions (BAM: N=24, BP: N=13) between 03/22 to 04/23. Participants ranged in age from `r youngest_age` -- `r oldest_age` years with the average age being `r mean_age` years. Participants were mostly women (`r percent_women`%) and and the most commonly reported race was White (N = `r percent_white`%). Furthermore, the majority of participants identified as heterosexual (`r percent_heterosexual`%) followed by bisexual (`r percent_bisexual`%). At the time of the intervention, `r sum_student` participants reported being students. For a study flow diagram, see Figure 1.
 
 | Demographics     | BAM                                      | Body Project                           | Total                         |
-|------------------|------------------------------------------|----------------------------------------|-------------------------------|
+|----------------|---------------------|--------------------|----------------|
 | n                | 37 (56%)                                 | 29 (44%)                               | 66 (100%)                     |
 | *Gender*         |                                          |                                        |                               |
 | Female           | `r bam_women_n` (`r bam_women`%)         | `r bp_women_n` (`r bp_women`%)         | `r total_women_n` (95.45%)    |

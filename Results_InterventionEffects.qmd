@@ -1,5 +1,5 @@
 ---
-title: "Intervention Effects KS"
+title: "Intervention Effects"
 format: html
 editor: visual
 ---
@@ -41,7 +41,7 @@ sd_df$SD <- round(sd_df$SD, 2)
 
 ```
 
-```{r}
+```{r message=FALSE, echo=FALSE, warning=FALSE}
 mean_list <- list()
 
 for (i in target_vars) { 
@@ -124,7 +124,7 @@ for (i in target_vars) {
   
   # Create a data frame to store the effect sizes for the current target variable
   result <- data.frame(
-    group = unique(filtered_data$group),
+    group = c("BAM","BP"),
     Variable = i,
     Cohens_d_baseline_post = cohen_d_baseline_post,
     Cohens_d_baseline_8_week = cohen_d_baseline_8_week
@@ -196,14 +196,7 @@ for (i in 2:length(target_vars)) {
 combined_plots
 ggsave(plot = combined_plots, file = 'figs/targets.png')
 ```
-
-```{r message=FALSE, echo=FALSE, warning=FALSE}
-library(knitr)
-load("tabs/results_tables.RData")
-knitr::kable(effect_sizes_df, format = "html", caption = "Effect Sizes Table")
-knitr::kable(mean_df, format = "html", caption = "Mean Table")
-```
-
+Figure 2. Intervention Effects.
 ```{r message=FALSE, echo=FALSE, warning=FALSE}
 ###cleaning the table###
 
@@ -263,13 +256,12 @@ final_results_table <- final_results_table %>%
     Construct %in% c("sataq_average_25", "ibssr_mean_25") ~ "Thin ideal internalization",
     TRUE ~ Construct
   ))
-print(final_results_table)
 knitr::kable(final_results_table, format = "html", caption = "Intervention Effects")
 ```
+Table 3. Intervention Effects including means (standard deviations) at all three timepoints and effect sizes. 
 
-`r final_results_table[1,7]`
 
-```{r}
+```{r message=FALSE, echo=FALSE, warning=FALSE}
 ###Calculating reliability###
 library(ltm)
 gffs_variables <- c("gffs_1_fear_fat", "gffs_2_fear_little_gain", "gffs_3_overweight_risk", 
@@ -299,10 +291,8 @@ ibssr_data <- BAM_redcap_long_merged[, ibssr_variables]
 cronbach.alpha(ibssr_data, na.rm = TRUE)
 ```
 
-Effect sizes were calculated for both BAM and Body Project to assess if reductions in fatphobia, anti-fat bias, and thin ideal internalization differed between interventions across time points. To see effect sizes, means, and standard deviations for each group, see table XX.
+Fifty participants (BAM: N = 26 (39.39%); BP: N = 24 (36.36%)) completed study activities at all three time points and attended both intervention sessions. Effect sizes were calculated for both BAM and BP among those who completed all study components to assess initial signal of impacts on key intervention targets for both interventions across time points and to benchmark BAM effects against a similarly-delivered BP intervention. To see effect sizes, means, and standard deviations for each group, see Table 3; see Figure 2 for a depiction of changes over time across groups.
+Both BAM and BP interventions produced reductions in fatphobia (measured via the GFFS) between baseline and post session with medium effect sizes (BAM: d = `r final_results_table[1,7]`; BP: d = `r final_results_table[2,7]`. BP maintained the level of reduction from baseline to 8-week post session (d = `r final_results_table[2,8]`) while the reduction was slightly diminished for BAM participants (d = `r final_results_table[1,8]`).
+Both the UMB-Fat and the EPSI "Negative Attitudes Toward Obesity" subscale were used to assess anti-fat bias. BAM participants demonstrated a medium reduction at baseline to post session (d = `r final_results_table[3,7]`) while BP participants only demonstrated a small reduction (d = `r final_results_table[4,7]`) on the UMB-Fat. UMB-Fat impacts were not sustained for BAM to 8-week post session on the UMB-Fat (d = `r final_results_table[3,8]`), while BP participants showed an increase in anti-fat bias at this time point (d = `r final_results_table[4,8]`). BAM and BP both showed small reductions on EPSI Negative Attitudes towards Obesity from baseline to post session (BAM: d = `r final_results_table[5,7]`; BP: d = `r final_results_table[6,7]`) and  baseline to 8-week post session (BAM: d = `r final_results_table[5,8]`; BP: d = `r final_results_table[6,8]`). 
+Thin ideal internalization was assessed using the SATAQ and IBSS-R measures. Neither BAM nor BP demonstrated a reduction on the SATAQ at either baseline to post session (BAM: d = `r final_results_table[7,7]`; BP: d = `r final_results_table[8,7]`) or baseline to 8-week post session (BAM: d = `r final_results_table[7,8]`; BP: d = `r final_results_table[8,8]`). BAM participants demonstrated large reductions in thin ideal internalization on the IBSS-R at baseline to post session (d = `r final_results_table[9,7]`), while BP participants (d = `r final_results_table[10,7]`) showed moderate reductions; both interventions maintained a similar level of reduction from baseline to 8-week post session (BAM: d = `r final_results_table[9,8]`; BP: d = `r final_results_table[10,8]`). 
 
-Both BAM and Body Project interventions produced reductions in fatphobia (measured via the GFFS) between baseline and post session with medium effect sizes (BAM: d = -0.51; BP: d = -0.61), but Body Project outperformed BAM by maintaining the level of reduction from baseline to 8-week post session (d = -0.60) while the reduction was diminished for BAM participants to a small effect size (d = -0.35), thus disproving our hypothesis 2a.
-
-Both the UMB-FAT and the EPSI "Negative Attitudes Toward Obesity" subscale were used to assess anti-fat bias. Hypothesis 2b was partially confirmed with BAM participants showing a medium reduction at baseline to post session (d = -0.52) while Body Project participants only demonstrated a small reduction (d = -0.32). Despite BAM participants not exhibiting a reduction between baseline and 8-week post session on the UMB-FAT (d = -0.09), Body Project participants showed an increase in anti-fat bias at this time point (d = 0.22). Nonetheless, BAM and Body Project did not differ in reductions on the EPSI subscale at either baseline to post session (BAM: d = -0.13; BP: d = -0.22) or baseline to 8-week post session (BAM: d = -0.23; BP: d = -0.12).
-
-Thin ideal internalization was assessed using the SATAQ and IBSS-R measures. Neither BAM nor Body Project demonstrated a reduction on the SATAQ at either baseline to post session (BAM: d = -0.11; BP: d = -0.09) or baseline to 8-week post session (BAM: d = 0.07; BP: d = 0.11). Hypothesis 2c is further disproved as BAM participants showed greater reductions of thin ideal internalization on the IBSS-R at baseline to post session (d = -0.82) compared to Body Project participants (d = -0.52) while both interventions maintained a similar level of reduction from baseline to 8-week post session (BAM: d = -0.47; BP: d = -0.47).
