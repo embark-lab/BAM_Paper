@@ -168,7 +168,7 @@ sum_student <- sum(dem_data$dcf_student, na.rm = TRUE)
 Participants (N = 66) were randomly assigned to either the BAM (N=37) or the Body Project (N=29) intervention. Of these, 29 attended the interventions virtually (BAM: N=14, BP: N= 15) beginning 10/20 and ending 02/22 due to the pandemic and 37 attended in-person sessions (BAM: N=24, BP: N=13) between 03/22 to 04/23. Participants ranged in age from `r youngest_age` -- `r oldest_age` years with the average age being `r mean_age` years. Participants were mostly women (`r percent_women`%) and and the most commonly reported race was White (N = `r percent_white`%). Furthermore, the majority of participants identified as heterosexual (`r percent_heterosexual`%) followed by bisexual (`r percent_bisexual`%). At the time of the intervention, `r sum_student` participants reported being students. For a study flow diagram, see Figure 1.
 
 | Demographics     | BAM                                      | Body Project                           | Total                         |
-|----------------|---------------------|--------------------|----------------|
+|-----------------|--------------------|-------------------|-----------------|
 | n                | 37 (56%)                                 | 29 (44%)                               | 66 (100%)                     |
 | *Gender*         |                                          |                                        |                               |
 | Female           | `r bam_women_n` (`r bam_women`%)         | `r bp_women_n` (`r bp_women`%)         | `r total_women_n` (95.45%)    |

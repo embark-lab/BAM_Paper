@@ -9,9 +9,10 @@ book:
   chapters:
     - index.qmd
     - Sample_Description.qmd
+    - preliminary_analysis.qmd
+    - Acceptability.qmd
     - Feasibility.qmd
-    - InterventionEffects.KS.qmd
-    - tabs/results_tables.RData
+    - Results_InterventionEffects.qmd
     - references.qmd
 
 bibliography: references.bib
