@@ -1,9 +1,3 @@
-# Preface {.unnumbered}
+# Abstract {.unnumbered}
 
-This is a Quarto book.
-
-To learn more about Quarto books visit <https://quarto.org/docs/books>.
-
-```{r}
-1 + 1
-```
+The Body Advocacy Movement (BAM) is a two-session, cognitive-dissonance based intervention designed to address fear of weight gain and anti-fat bias as critical targets for eating disorder (ED) interventions. Previous dissonance-based programs (i.e., the Body Project; BP) have been utilized to reduce the thin ideal internalization as a key target of ED development, but fatphobia and anti-fat bias may play a more central role in the maintenance of ED pathology. The aims of this pilot study encompass confirming acceptability and feasibility of the novel intervention while estimating its effects on intervention targets. Preliminary results from 50 participants completing the study (BAM: N = 26; BP: N = 24) reveal promising reductions in fatphobia, anti-fat bias, thin ideal internalization, and eating pathology. BAM was also found to be accepted by participants and feasible to facilitate. The BAM intervention has the potential to fill an existing gap in ED prevention, but a larger, more diverse sample is necessary before future dissemination.
