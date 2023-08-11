@@ -1,0 +1,1 @@
+This is a repository designed to house reproducible code for paper, "The Body Advocacy Movement: A novel intervention to reduce fear of weight gain and anti-fat bias in young adults" (Pictor, Laboe, Dillon, Frank, Gavuji, & Schaumberg; Under Review). Code is available here, with a formatted, html version of the paper available at https://embark-lab.github.io/BAM_Paper/ 
