@@ -13,6 +13,7 @@ book:
     - Acceptability.qmd
     - Feasibility.qmd
     - Results_InterventionEffects.qmd
+    - ed_pathology.qmd
     - references.qmd
 
 bibliography: references.bib

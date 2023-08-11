@@ -1,0 +1,80 @@
+---
+title: "ED Pathology"
+editor: visual
+---
+
+# ED Pathology
+
+
+```{r message=FALSE, echo=FALSE, warning=FALSE}
+#load data
+
+setwd("/Volumes/kschaumberg")
+load("/Volumes/kschaumberg/BAM/BAM-data-cleaning/data/BAM_redcap_long_merged.2023-08-11.RData")
+ load("/Volumes/kschaumberg/BAM/BAM-data-cleaning/data/BAM_redcap_wide_merged.2023-08-11.RData")
+```
+
+```{r message=FALSE, echo=FALSE, warning=FALSE}
+#Split the dataframe by group and get FP only
+
+library(dplyr)
+grouped_wide <- BAM_redcap_wide_merged %>% group_by(BAM_redcap_wide_merged$group_baseline)
+grouped_interim <- group_split(grouped_wide)
+fp_wide<- grouped_interim[[2]]
+```
+
+```{r message=FALSE, echo=FALSE, warning=FALSE}
+#New DF with just the subscales I want
+
+fp_epsi <- bind_cols(fp_wide$id,fp_wide$epsi_body_dissatisfaction_25_baseline, fp_wide$epsi_body_dissatisfaction_25_8wk, fp_wide$epsi_binge_25_baseline, fp_wide$epsi_binge_25_8wk, fp_wide$epsi_restraint_25_baseline, fp_wide$epsi_restraint_25_8wk, fp_wide$epsi_purging_25_baseline, fp_wide$epsi_purging_25_8wk, fp_wide$epsi_restrict_25_baseline, fp_wide$epsi_restrict_25_8wk, fp_wide$epsi_exercise_25_baseline, fp_wide$epsi_exercise_25_8wk, fp_wide$epsi_muscle_build_25_baseline, fp_wide$epsi_muscle_build_25_8wk,
+          .name_repair = "universal")
+new_column_names <- c("id", "body_dissatisfaction_baseline", "body_dissatisfaction_8wk", "binge_baseline", "binge_8wk", "restraint_baseline", "restraint_8wk", "purging_baseline", "purging_8wk", "restrict_baseline", "restrict_8wk", "exercise_baseline", "exercise_8wk", "muscle_build_baseline", "muscle_build_8wk")
+colnames(fp_epsi) <- new_column_names
+fp_epsi <- na.omit(fp_epsi)
+```
+
+```{r message=FALSE, echo=FALSE, warning=FALSE}
+#create the graphing df
+
+rownames <- c("body_dissatisfaction_baseline_mean", "body_dissatisfaction_8wk_mean", "binge_baseline_mean", "binge_8wk_mean", "restraint_baseline_mean", "restraint_8wk_mean", "purging_baseline_mean", "purging_8wk_mean", "restrict_baseline_mean", "restrict_8wk_mean", "exercise_baseline_mean", "exercise_8wk_mean", "muscle_build_baseline_mean", "muscle_build_8wk_mean")
+name <- c("body_dissat", "binge", "restraint", "purging","restrict", "exercise", "muscle_build")
+baseline <- c(mean(fp_epsi$body_dissatisfaction_baseline), mean(fp_epsi$binge_baseline), mean(fp_epsi$restraint_baseline), mean(fp_epsi$purging_baseline), mean(fp_epsi$restrict_baseline), mean(fp_epsi$exercise_baseline), mean(fp_epsi$muscle_build_baseline))
+eight_wk <- c(mean(fp_epsi$body_dissatisfaction_8wk), mean(fp_epsi$binge_8wk), mean(fp_epsi$restraint_8wk), mean(fp_epsi$purging_8wk), mean(fp_epsi$restrict_8wk), mean(fp_epsi$exercise_8wk), mean(fp_epsi$muscle_build_8wk))
+inter_g <-data.frame(baseline, eight_wk)
+inter_g <- tibble::rownames_to_column(inter_g, var = "name")
+inter_g$name <- c("body_dissat", "binge", "restraint", "purging","restrict", "exercise", "muscle_build")
+means <- c(mean(fp_epsi$body_dissatisfaction_baseline), mean(fp_epsi$binge_baseline), mean(fp_epsi$restraint_baseline), mean(fp_epsi$purging_baseline), mean(fp_epsi$restrict_baseline), mean(fp_epsi$exercise_baseline), mean(fp_epsi$muscle_build_baseline),mean(fp_epsi$body_dissatisfaction_8wk), mean(fp_epsi$binge_8wk), mean(fp_epsi$restraint_8wk), mean(fp_epsi$purging_8wk), mean(fp_epsi$restrict_8wk), mean(fp_epsi$exercise_8wk), mean(fp_epsi$muscle_build_8wk))
+timepoint <- c(1,1,1,1,1,1,1,2,2,2,2,2,2,2)
+  
+subscale <-  c("body_dissat", "binge", "restraint", "purging","restrict", "exercise", "muscle_build", "body_dissat", "binge", "restraint", "purging","restrict", "exercise", "muscle_build")
+ inter_g_long <- data.frame(subscale, means, timepoint)
+  inter_g_long$subscale <- as.character(inter_g_long$subscale)
+  inter_g_long$timepoint <- as.factor(inter_g_long$timepoint)
+inter_g_long$means <- as.numeric(as_vector(inter_g_long$means))
+inter_g_long$cohens_d <- c(NA, NA, NA, NA, NA, NA, NA, inter_g$cohens_d)
+```  
+
+```{r message=FALSE, echo=FALSE, warning=FALSE}
+#Try graphing
+
+epsi_g <- ggplot(data = inter_g_long, aes(x = timepoint, y = means, group =subscale))+ geom_point()+ geom_line(aes( color = subscale))+ labs(x = "Timepoint", y = "Mean EPSI Subscale Score", color = "Subscale")+ theme_igray()+ scale_x_discrete(labels = c("1" = "Baseline", "2" = "8 Week")) + scale_color_discrete(labels = c("binge" = "Binge Eating", "body_dissat" = "Body Dissatisfaction", "exercise" = "Excessive Exercise", "muscle_build" = "Muscle Building", "purging" = "Purging", "restraint" = "Cognitive Restraint", "restrict" = "Restricting" ))+  
+  geom_text(
+ data = tail(inter_g_long, n = 7), show.legend = FALSE,
+  aes(label = paste("d = ", round(cohens_d,3)), x = 2, y = means, color = subscale),
+  hjust = -.1, vjust = .2)
+epsi_g
+         
+```
+
+```{r message=FALSE, echo=FALSE, warning=FALSE}
+#New Table
+
+inter_g$cohens_d <- c(cohen.d(fp_epsi$body_dissatisfaction_baseline,fp_epsi$body_dissatisfaction_8wk)[[3]],
+                  cohen.d(fp_epsi$binge_baseline,fp_epsi$binge_8wk)[[3]],
+                  cohen.d(fp_epsi$restraint_baseline,fp_epsi$restraint_8wk)[[3]],
+                  cohen.d(fp_epsi$purging_baseline,fp_epsi$purging_8wk)[[3]],
+                  cohen.d(fp_epsi$restrict_baseline,fp_epsi$restrict_8wk)[[3]],
+                  cohen.d(fp_epsi$exercise_baseline,fp_epsi$exercise_8wk)[[3]],
+                  cohen.d(fp_epsi$muscle_build_baseline,fp_epsi$muscle_build_8wk)[[3]])
+test <-cohen.d(fp_epsi$body_dissatisfaction_baseline,fp_epsi$body_dissatisfaction_8wk)
+```

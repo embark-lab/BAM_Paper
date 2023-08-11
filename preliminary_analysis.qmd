@@ -90,29 +90,26 @@ baseline_stats <- long_data %>%
             sd = round(sd(value, na.rm = TRUE), 2),
             range = round(range(value, na.rm = TRUE), 2))
 
-# Print the summary statistics
-print(baseline_stats)
-
 ```
 
 ```{r message=FALSE, echo=FALSE, warning=FALSE}
-gffs_sum = 
-gffs_clinical <- mean(total_baseline_data$gffs_sum_25 >= 30.1, na.rm = TRUE) * 100
+
+gffs_clinical <- sum(total_baseline_data$gffs_sum_25 >= 30.1, na.rm = TRUE)
 ```
 
-Baseline levels of fatphobia and eating disorder pathology within the sample were assessed to compare to clinical and community norms. Przybyła-Basista et al., (2022) assessed both clinical and non-clinical samples using the GFFS. The clinical sample consisted of 135 females and generated a mean score of N = 30.1 (SD = 7.7) while the two non-clinical samples (sample one: N = 296; sample two: N = 287) both expressed less fatphobia (sample one: mean = 20.3 (SD = 6.8); sample two: mean = 19.6 (SD = 6.8)). The current study's sample is representative of a community sample by generating a mean baseline score of `r baseline_stats[17,2]`(SD = `r baseline_stats[17,3]`, R = `r baseline_stats[17,3]`- `r baseline_stats[18,3]`).
+Baseline levels of fatphobia and eating disorder pathology within the sample were assessed to compare to clinical and community norms. Przybyła-Basista et al., (2022) assessed both clinical and non-clinical samples using the GFFS. The clinical sample consisted of 135 females and generated a mean score of 30.1 (SD = 7.7) while the two non-clinical samples (sample 1: N = 296; sample 2: N = 287) both expressed less fatphobia (sample one: mean = 20.3 (SD = 6.8); sample two: mean = 19.6 (SD = 6.8)). The current study's sample is representative of a community sample by generating a mean baseline score of `r baseline_stats[17,2]`(SD = `r baseline_stats[17,3]`; R = `r baseline_stats[17,3]`- `r baseline_stats[18,3]`).
 
 The EPSI was also assessed in a community sample of college students (N = 262) and an eating disorder sample (N = 158; Forbush et al., 2013). See Table 2 for a comparison between Forbush's community and ED samples and this study's sample pathology.
 
-| Subscales                         | Community Sample Mean (SD) | ED sample Mean (SD) | Study Sample Mean (SD; R)                                                                                        |
+| Subscales                         | Community Sample Mean (SD) | ED sample Mean (SD) | Current Study Sample Mean (SD; R)                                                                                 |
 |------------------|------------------|------------------|------------------|
-| Body dissatisfaction              | 11.86 (6.41)               | 20.79 (6.91)        | `r baseline_stats[3,2]` (SD = `r baseline_stats[3,3]`; R = `r baseline_stats[3,4]` - `r baseline_stats[4,4]`     |
-| Binge eating                      | 9.62 (4.85)                |  9.10 (9.00)        | `r baseline_stats[1,2]` (SD = `r baseline_stats[1,3]`; R = `r baseline_stats[1,4]` - `r baseline_stats[2,4]`     |
-| Cognitive restraint               | 5.06 (2.72)                | 9.60 (3.31)         | `r baseline_stats[13,2]` (SD = `r baseline_stats[13,3]`; R = `r baseline_stats[13,4]` - `r baseline_stats[14,4]` |
-| Purging                           | 0.69 (1.71)                | 5.25 (5.97)         | `r baseline_stats[11,2]` (SD = `r baseline_stats[11,3]`; R = `r baseline_stats[11,4]` - `r baseline_stats[12,4]` |
-| Restricting                       | 4.97 (4.18)                | 16.27 (6.38)        | `r baseline_stats[15,2]` (SD = `r baseline_stats[15,3]`; R = `r baseline_stats[15,4]` - `r baseline_stats[16,4]` |
-| Excessive Exercise                | 6.53 (5.06)                | 10.18 (7.61)        | `r baseline_stats[5,2]` (SD = `r baseline_stats[5,3]`; R = `r baseline_stats[5,4]` - `r baseline_stats[6,4]`     |
-| Negative attitudes toward obesity | 10.03 (4.60)               |  10.53 (6.91)       | `r baseline_stats[9,2]` (SD = `r baseline_stats[9,3]`; R = `r baseline_stats[9,4]` - `r baseline_stats[10,4]`    |
-| Muscle building                   | 3.40 (4.13)                | 2.04 (2.39)         | `r baseline_stats[7,2]` (SD = `r baseline_stats[7,3]`; R = `r baseline_stats[7,4]` - `r baseline_stats[8,4]`     |
+| Body dissatisfaction              | 11.86 (6.41)               | 20.79 (6.91)        | `r baseline_stats[3,2]` (SD = `r baseline_stats[3,3]`; R = `r baseline_stats[3,4]` - `r baseline_stats[4,4]` )    |
+| Binge eating                      | 9.62 (4.85)                | 9.10 (9.00)         | `r baseline_stats[1,2]` (SD = `r baseline_stats[1,3]`; R = `r baseline_stats[1,4]` - `r baseline_stats[2,4]`)     |
+| Cognitive restraint               | 5.06 (2.72)                | 9.60 (3.31)         | `r baseline_stats[13,2]` (SD = `r baseline_stats[13,3]`; R = `r baseline_stats[13,4]` - `r baseline_stats[14,4]`) |
+| Purging                           | 0.69 (1.71)                | 5.25 (5.97)         | `r baseline_stats[11,2]` (SD = `r baseline_stats[11,3]`; R = `r baseline_stats[11,4]` - `r baseline_stats[12,4]`) |
+| Restricting                       | 4.97 (4.18)                | 16.27 (6.38)        | `r baseline_stats[15,2]` (SD = `r baseline_stats[15,3]`; R = `r baseline_stats[15,4]` - `r baseline_stats[16,4]`) |
+| Excessive Exercise                | 6.53 (5.06)                | 10.18 (7.61)        | `r baseline_stats[5,2]` (SD = `r baseline_stats[5,3]`; R = `r baseline_stats[5,4]` - `r baseline_stats[6,4]`)     |
+| Negative attitudes toward obesity | 10.03 (4.60)               | 10.53 (6.91)        | `r baseline_stats[9,2]` (SD = `r baseline_stats[9,3]`; R = `r baseline_stats[9,4]` - `r baseline_stats[10,4]`)    |
+| Muscle building                   | 3.40 (4.13)                | 2.04 (2.39)         | `r baseline_stats[7,2]` (SD = `r baseline_stats[7,3]`; R = `r baseline_stats[7,4]` - `r baseline_stats[8,4]`)     |
 
-Table 2. EPSI means of a community and ED sample (Forbush, 2013) and this study sample.
+Table 2. Baseline eating pathology on the EPSI.
